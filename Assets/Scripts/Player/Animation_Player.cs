@@ -1,0 +1,146 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
+
+public class Animation_Player : MonoBehaviour
+{
+	[SerializeField] GameObject m_player;
+	[SerializeField] BoxCollider m_weaponCol;
+	private Animator m_anim;
+
+	// 移動アニメーション用
+	private Vector3 m_pastPos;
+
+	// 移動制限用
+	private bool m_stopMove;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_anim = GetComponent<Animator>();
+		m_pastPos = transform.position;
+		m_stopMove = false;
+		m_weaponCol.enabled = false;
+
+		// AnimatorからObservableStateMachineTriggerの参照を取得
+		ObservableStateMachineTrigger trigger =
+			m_anim.GetBehaviour<ObservableStateMachineTrigger>();
+
+		// Stateの開始イベント
+		IDisposable enterState = trigger
+			.OnStateEnterAsObservable()
+			.Subscribe(onStateInfo =>
+			{
+				AnimatorStateInfo info = onStateInfo.StateInfo;
+				
+			}).AddTo(this);
+
+		// Stateの終了イベント
+		IDisposable exitState = trigger
+			.OnStateExitAsObservable()
+			.Subscribe(onStateInfo =>
+			{
+				AnimatorStateInfo info = onStateInfo.StateInfo;
+				if (info.IsName("Base Layer.Attack3") ||
+					info.IsName("Base Layer.Rolling") )
+				{
+					SetModelPos();
+				}
+
+			}).AddTo(this);
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+		Move();
+
+		AttackAnim();
+	}
+
+	// 移動アニメーション
+	private void Move()
+	{
+		// 走っているかどうか
+		if(Input.GetKey("left shift"))
+		{
+			m_anim.SetBool("run", true);
+		}
+		else
+		{
+			m_anim.SetBool("run", false);
+		}
+
+		// 移動アニメーション
+		if (transform.position != m_pastPos)
+		{
+			m_anim.SetBool("walk", true);
+		}
+		else
+		{
+			m_anim.SetBool("walk", false);
+		}
+
+		/*
+		if(Input.GetKeyDown("space"))
+		{
+			m_anim.SetTrigger("rolling");
+		}
+		 */
+
+		m_pastPos = transform.position;
+	}
+
+	// 攻撃アニメーション
+	private void AttackAnim()
+	{
+		if(Input.GetMouseButtonDown(0))
+		{
+			// 左クリックで攻撃
+			m_anim.SetTrigger("attack");
+		}
+	}
+
+	// 移動できる状態か取得
+	public bool GetMoveFlg()
+	{
+		return m_stopMove;
+	}
+
+	// ---- 移動できないアニメーションにつける関数 ----
+	public void StopMove()
+	{
+		if(!m_stopMove)
+		{
+			// 移動を制限
+			m_stopMove = true;
+		}
+	}
+	public void CanMove()
+	{
+		if(m_stopMove)
+		{
+			// 移動制限を解除
+			m_stopMove = false;
+		}
+	}
+
+	// ---- 攻撃アニメーションにつける ----
+	public void ActiveCol()
+	{
+		m_weaponCol.enabled = true;
+	}
+	public void InactiveCol()
+	{
+		m_weaponCol.enabled = false;
+	}
+
+	// 位置が変わるアニメーション終了時に位置合わせをする
+	public void SetModelPos()
+	{
+		m_player.GetComponent<Move_Player>().SetPos(transform.position);
+	}
+}
