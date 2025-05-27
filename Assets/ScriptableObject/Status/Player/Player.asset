@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87383916f7cfb3144ab677d6fd4b8704, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  m_lv: 1
+  m_lv: 9
   m_hp: 100
   m_atk: 10
   m_def: 10
   m_spd: 10
-  m_skillPoint: 0
+  m_skillPoint: 200

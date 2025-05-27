@@ -9,6 +9,9 @@ public class Animation_Player : MonoBehaviour
 {
 	[SerializeField] GameObject m_player;
 	[SerializeField] BoxCollider m_weaponCol;
+	// ポーズ画面管理用オブジェクト
+	[SerializeField] GameObject m_pauseManager;
+
 	private Animator m_anim;
 
 	// 移動アニメーション用
@@ -56,6 +59,11 @@ public class Animation_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if(m_pauseManager.GetComponent<PauseSceneManager>().IsPause())
+		{
+			return;
+		}
+
 		Move();
 
 		AttackAnim();

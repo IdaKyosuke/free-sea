@@ -26,33 +26,49 @@ public class Status : ScriptableObject
 	[SerializeField] int m_spd;
 	[SerializeField] int m_skillPoint;  // プレイヤー専用
 
+	// 初期ステータスの配列
+	private int[] m_firstStatus = new int[(int)StatusType.Length];
+
 	// ステータスの配列
 	private int[] m_status = new int[(int)StatusType.Length];
-
-	// ステータスが初期化されたかどうか
-	private bool m_isInitialized = false;
 
 	// プレイヤー用の関数
 	// ステータスの初期化
 	public void Initialize()
 	{
-		// 多重初期化されないようフラグで管理
-		if(!m_isInitialized)
-		{
-			m_status[(int)StatusType.Hp] = m_hp;
-			m_status[(int)StatusType.Atk] = m_atk;
-			m_status[(int)StatusType.Def] = m_def;
-			m_status[(int)StatusType.Spd] = m_spd;
-			m_status[(int)StatusType.SkillPoint] = m_skillPoint;
-			m_isInitialized = true;
-		}
+		// 変更用ステータスを作成
+		m_status[(int)StatusType.Hp] = m_hp;
+		m_status[(int)StatusType.Atk] = m_atk;
+		m_status[(int)StatusType.Def] = m_def;
+		m_status[(int)StatusType.Spd] = m_spd;
+		m_status[(int)StatusType.SkillPoint] = m_skillPoint;
+
+		// 初期ステータスを配列化
+		m_firstStatus[(int)StatusType.Hp] = m_hp;
+		m_firstStatus[(int)StatusType.Atk] = m_atk;
+		m_firstStatus[(int)StatusType.Def] = m_def;
+		m_firstStatus[(int)StatusType.Spd] = m_spd;
+		m_firstStatus[(int)StatusType.SkillPoint] = m_skillPoint;
 	}
 
 	public void LvUp() { m_lv++; }
+	public int GetLv() {  return m_lv; }
 
 	// ---- スキルポイント割り振り用 ----
 	public void UseSkillPoint(StatusType type, int point) 
 	{
+		// 残りスキルポイントが0を下回るときに0までのポイントを使えるよう調整
+		if (m_status[(int)StatusType.SkillPoint] - point < 0)
+		{
+			// 任意のステータスを強化
+			m_status[(int)type] += m_status[(int)StatusType.SkillPoint];
+			// スキルポイントを0に合わせる
+			m_status[(int)StatusType.SkillPoint] = 0;
+
+			Debug.Log(m_status[(int)StatusType.SkillPoint]);
+			return;
+		}
+
 		// 任意のステータスを強化
 		m_status[(int)type] += point;
 		// スキルポイントを消費
@@ -62,10 +78,20 @@ public class Status : ScriptableObject
 	// スキル振り直し用
 	public void ResetSkillPoint(StatusType type, int point)
 	{
+		// 初期値を下回る場合は初期値までしか下げない
+		if (m_status[(int)type] - point < m_firstStatus[(int)type])
+		{
+			// 最低値まで下げた時の余剰ポイントを追加
+			int p = m_status[(int)type] - m_firstStatus[(int)type];
+			m_status[(int)StatusType.SkillPoint] += p;
+			// 現在のステータスを初期値に合わせる
+			m_status[(int)type] = m_firstStatus[(int)type];
+			return;
+		}
 		// 任意のステータスを弱化
 		m_status[(int)type] -= point;
 		// スキルポイントを追加
-		m_status[(int)StatusType.SkillPoint]++;
+		m_status[(int)StatusType.SkillPoint] += point;
 	}
 
 	// ステータス取得用

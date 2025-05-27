@@ -46,7 +46,6 @@ public class Move_Player : MonoBehaviour
     {
 		// フラグの更新
 		m_stopMove = m_model.GetComponent<Animation_Player>().GetMoveFlg();
-
 		// 本来の移動
 		NormalMove();
 	}
@@ -70,13 +69,7 @@ public class Move_Player : MonoBehaviour
 		}
 		else
 		{
-			// キーの入力
-			m_inputX = 0;
-			m_inputZ = 0;
-
-			// カメラの向き
-			m_camForward = Vector3.zero;
-			m_camRight = Vector3.zero;
+			SetZero();
 		}
 
 		m_moveDirection = m_camForward * m_inputZ + m_camRight * m_inputX;
@@ -115,6 +108,18 @@ public class Move_Player : MonoBehaviour
 			m_moveVelocity.y = 0;
 		}
 		m_charaCon.Move(m_moveVelocity * Time.deltaTime);
+	}
+
+	// 移動を止めるときに使う
+	private void SetZero()
+	{
+		// キーの入力
+		m_inputX = 0;
+		m_inputZ = 0;
+
+		// カメラの向き
+		m_camForward = Vector3.zero;
+		m_camRight = Vector3.zero;
 	}
 
 	// 位置合わせ
