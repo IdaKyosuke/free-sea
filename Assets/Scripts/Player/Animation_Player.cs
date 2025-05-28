@@ -20,6 +20,10 @@ public class Animation_Player : MonoBehaviour
 	// 移動制限用
 	private bool m_stopMove;
 
+	// 攻撃アニメーションが動いているか
+	const int AttackAnimNum = 3;
+	private bool[] m_attackAnimFlg = new bool[AttackAnimNum];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,10 @@ public class Animation_Player : MonoBehaviour
 		m_pastPos = transform.position;
 		m_stopMove = false;
 		m_weaponCol.enabled = false;
+		for(int i = 0; i < AttackAnimNum; i++)
+		{
+			m_attackAnimFlg[i] = false;
+		}
 
 		// AnimatorからObservableStateMachineTriggerの参照を取得
 		ObservableStateMachineTrigger trigger =
@@ -38,7 +46,18 @@ public class Animation_Player : MonoBehaviour
 			.Subscribe(onStateInfo =>
 			{
 				AnimatorStateInfo info = onStateInfo.StateInfo;
-				
+				if (info.IsName("Base Layer.Attack1"))
+				{
+					m_attackAnimFlg [0] = true;
+				}
+				if (info.IsName("Base Layer.Attack2"))
+				{
+					m_attackAnimFlg[1] = true;
+				}
+				if (info.IsName("Base Layer.Attack3"))
+				{
+					m_attackAnimFlg[2] = true;
+				}
 			}).AddTo(this);
 
 		// Stateの終了イベント
@@ -47,10 +66,42 @@ public class Animation_Player : MonoBehaviour
 			.Subscribe(onStateInfo =>
 			{
 				AnimatorStateInfo info = onStateInfo.StateInfo;
-				if (info.IsName("Base Layer.Attack3") ||
-					info.IsName("Base Layer.Rolling") )
+				if (info.IsName("Base Layer.Attack1"))
+				{
+					m_attackAnimFlg[0] = false;
+					if (!m_attackAnimFlg[1])
+					{
+						CanMove();
+						InactiveCol();
+					}
+				}
+				if (info.IsName("Base Layer.Attack2"))
+				{
+					if (!m_attackAnimFlg[2])
+					{
+						CanMove();
+						InactiveCol();
+					}
+					m_attackAnimFlg[1] = false;
+				}
+				if (info.IsName("Base Layer.Attack3"))
+				{
+					// アニメーションの動きに合わせて位置合わせ
+					SetModelPos();
+
+					if (!m_attackAnimFlg[0])
+					{
+						CanMove();
+						InactiveCol();
+					}
+					m_attackAnimFlg[2] = false;
+				}
+
+				// 位置合わせ
+				if (info.IsName("Base Layer.Rolling"))
 				{
 					SetModelPos();
+					CanMove();
 				}
 
 			}).AddTo(this);

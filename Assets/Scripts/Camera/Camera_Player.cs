@@ -20,7 +20,10 @@ public class Camera_Player : MonoBehaviour
 	[SerializeField] float m_runCamDist = 6.0f;    // カメラとpivotの距離
 	private Vector3 m_diff; // 移動距離
 
-	private bool m_canMove;	// カメラが動けるか
+	private bool m_canMove; // カメラが動けるか
+
+	// カメラをポーズ画面中動かないようにする
+	[SerializeField] GameObject m_pauseManager;
 
 	// Start is called before the first frame update
 	void Start()
@@ -46,6 +49,11 @@ public class Camera_Player : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if(m_pauseManager.GetComponent<PauseSceneManager>().IsPause())
+		{
+			return;
+		}
+
 		// プレイヤーの現在地を取得
 		m_currentPos = m_player.transform.position;
 

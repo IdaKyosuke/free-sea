@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Status_Player : MonoBehaviour
 {
-	// ScriptableObject
+	// プレイヤーのステータスが入ったScriptableObject
 	[SerializeField] Status m_status;
 	//private int m_devil;
 	[SerializeField] int m_needExp = 10;

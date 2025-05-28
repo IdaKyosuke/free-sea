@@ -65,7 +65,6 @@ public class Status : ScriptableObject
 			// スキルポイントを0に合わせる
 			m_status[(int)StatusType.SkillPoint] = 0;
 
-			Debug.Log(m_status[(int)StatusType.SkillPoint]);
 			return;
 		}
 

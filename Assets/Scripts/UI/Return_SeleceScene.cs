@@ -5,10 +5,11 @@ using UnityEngine;
 public class Return_SeleceScene : MonoBehaviour
 {
 	[SerializeField] GameObject m_selectMode;
+	[SerializeField] GameObject m_statusMode;
 
     public void ReturnSelectScene()
 	{
 		m_selectMode.SetActive(true);
-		this.gameObject.SetActive(false);
+		m_statusMode.gameObject.SetActive(false);
 	}
 }

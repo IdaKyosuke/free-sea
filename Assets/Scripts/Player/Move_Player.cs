@@ -127,6 +127,7 @@ public class Move_Player : MonoBehaviour
 	{
 		// characterControllerを無効にしないと動かない?
 		m_charaCon.enabled = false;
+		// カメラをいったん動かないようにする（ガクつき防止用）
 		m_cam.GetComponent<Camera_Player>().TurnMoveFlg();
 		transform.position = modelPos;
 		m_cam.GetComponent<Camera_Player>().TurnMoveFlg();

@@ -27,13 +27,13 @@ public class PauseSceneManager : MonoBehaviour
 
 		if (m_isPause)
 		{
-			// fixedUpdata‚ğ~‚ß‚é
+			// Time‚ªŠÖ‚í‚éˆ— && fixedUpdate ‚ğ~‚ß‚é
 			Time.timeScale = 0f;
 			m_pauseScene.SetActive(true);
 		}
 		else
 		{
-			// fixedUpdata‚ğÄŠJ
+			// Time‚ªŠÖ‚í‚éˆ— && fixedUpdate‚ğÄŠJ
 			Time.timeScale = 1.0f;
 			m_pauseScene.SetActive(false);
 		}
