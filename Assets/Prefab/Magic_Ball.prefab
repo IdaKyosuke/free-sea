@@ -162,7 +162,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -289,9 +289,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &8293572268359258321
 MonoBehaviour:
@@ -308,3 +308,4 @@ MonoBehaviour:
   m_hitEffect: {fileID: 5956861682246875327, guid: 76cbb913e9fd8cd4f9ab8a955549e9e2,
     type: 3}
   m_speed: 4
+  m_time: 0

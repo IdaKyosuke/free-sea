@@ -25,6 +25,10 @@ public class Animation_Player : MonoBehaviour
 	const int AttackAnimNum = 3;
 	private bool[] m_attackAnimFlg = new bool[AttackAnimNum];
 
+	// 魔法攻撃用のオブジェクト
+	[SerializeField] GameObject m_magic;
+	[SerializeField] GameObject m_magicPoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +110,11 @@ public class Animation_Player : MonoBehaviour
 				if (info.IsName("Base Layer.Rolling"))
 				{
 					SetModelPos();
+					CanMove();
+				}
+
+				if(info.IsName("Base Layer.Attack_Spell"))
+				{
 					CanMove();
 				}
 
@@ -224,5 +233,10 @@ public class Animation_Player : MonoBehaviour
 	{
 		// TrailRendererを無効にする
 		m_trail.GetComponent<TrailRenderer>().emitting = false;
+	}
+
+	public void SpellMagic()
+	{
+		Instantiate(m_magic, m_magicPoint.transform.position, Quaternion.identity);
 	}
 }
