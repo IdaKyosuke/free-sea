@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Move_MagicSphere : MonoBehaviour
+{
+	[SerializeField] GameObject m_hitEffect;
+	[SerializeField] float m_speed;
+	[SerializeField] float m_time;	// 消えるまでの時間 
+
+	private Rigidbody m_rb;
+	private Vector3 m_direction;
+	private float m_durationTime;	// 経過時間
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_rb = GetComponent<Rigidbody>();
+		// プレイヤーの正面を取得
+		GameObject player = GameObject.FindWithTag("Player");
+		m_direction = player.transform.forward;
+		m_durationTime = 0;
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        m_rb.velocity = m_direction * m_speed * Time.deltaTime;
+
+		m_durationTime += Time.deltaTime;
+		// 一定時間経過で破壊
+		if(m_durationTime >= m_time)
+		{
+			Destroy(this.gameObject);
+		}
+
+	}
+
+	private void OnCollisionEnter(Collision other)
+	{
+		if(other.gameObject.CompareTag("Enemy"))
+		{
+			// 衝突位置の取得
+			Vector3 hitPos = other.contacts[0].point;
+			// 衝突位置にエフェクトを表示
+			Instantiate(m_hitEffect, hitPos, Quaternion.identity);
+			// 自分を破壊
+			Destroy(this.gameObject);
+		}
+	}
+}

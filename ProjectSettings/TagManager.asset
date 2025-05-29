@@ -9,6 +9,7 @@ TagManager:
   - comboManager
   - zoneGaugeManager
   - playerStatus
+  - demon_blue
   layers:
   - Default
   - TransparentFX

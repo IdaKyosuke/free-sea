@@ -93,6 +93,12 @@ public class Status : ScriptableObject
 		m_status[(int)StatusType.SkillPoint] += point;
 	}
 
+	// レベルアップでスキルポイントを加算する（契約中の悪魔が好むステータスに自動で割り振られる）
+	public void AddSkillPoint(StatusType type, int point)
+	{
+		m_status[(int)type] += point;
+	}
+
 	// ステータス取得用
 	public int GetStatus(StatusType type)
 	{

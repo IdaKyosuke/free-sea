@@ -9,6 +9,7 @@ public class Animation_Player : MonoBehaviour
 {
 	[SerializeField] GameObject m_player;
 	[SerializeField] BoxCollider m_weaponCol;
+	[SerializeField] GameObject m_trail;	// TrailRendererが入ったオブジェクト
 	// ポーズ画面管理用オブジェクト
 	[SerializeField] GameObject m_pauseManager;
 
@@ -31,7 +32,11 @@ public class Animation_Player : MonoBehaviour
 		m_pastPos = transform.position;
 		m_stopMove = false;
 		m_weaponCol.enabled = false;
-		for(int i = 0; i < AttackAnimNum; i++)
+
+		// TrailRendererを無効にする
+		m_trail.GetComponent<TrailRenderer>().emitting = false;
+
+		for (int i = 0; i < AttackAnimNum; i++)
 		{
 			m_attackAnimFlg[i] = false;
 		}
@@ -143,6 +148,12 @@ public class Animation_Player : MonoBehaviour
 			m_anim.SetBool("walk", false);
 		}
 
+		// 魔法アニメーション
+		if(Input.GetMouseButtonDown(1))
+		{
+			m_anim.SetTrigger("spell");
+		}
+
 		/*
 		if(Input.GetKeyDown("space"))
 		{
@@ -194,12 +205,24 @@ public class Animation_Player : MonoBehaviour
 	}
 	public void InactiveCol()
 	{
-		m_weaponCol.enabled = false;
+		m_weaponCol.enabled = false;       
 	}
 
 	// 位置が変わるアニメーション終了時に位置合わせをする
 	public void SetModelPos()
 	{
 		m_player.GetComponent<Move_Player>().SetPos(transform.position);
+	}
+
+	public void ActiveTrail()
+	{
+		// TrailRendererを有効にする
+		m_trail.GetComponent<TrailRenderer>().emitting = true;
+	}
+
+	public void InactiveTrail()
+	{
+		// TrailRendererを無効にする
+		m_trail.GetComponent<TrailRenderer>().emitting = false;
 	}
 }
