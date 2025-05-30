@@ -141,4 +141,11 @@ public class Move_Player : MonoBehaviour
 	{
 		return m_isRun;
 	}
+
+	// プレイヤーの向きをカメラの正面方向に合わせる
+	public void SetCamFront()
+	{
+		// プレイヤーの回転
+		transform.rotation = Quaternion.LookRotation(m_cam.transform.forward);
+	}
 }

@@ -55,6 +55,8 @@ public class Animation_Player : MonoBehaviour
 			.Subscribe(onStateInfo =>
 			{
 				AnimatorStateInfo info = onStateInfo.StateInfo;
+
+				// 連撃用フラグ管理
 				if (info.IsName("Base Layer.Attack1"))
 				{
 					m_attackAnimFlg [0] = true;
@@ -66,6 +68,12 @@ public class Animation_Player : MonoBehaviour
 				if (info.IsName("Base Layer.Attack3"))
 				{
 					m_attackAnimFlg[2] = true;
+				}
+
+				// 魔法アニメーション
+				if(info.IsName("Base Layer.Spell_Magic"))
+				{
+					m_player.GetComponent<Move_Player>().SetCamFront();
 				}
 			}).AddTo(this);
 
@@ -237,6 +245,6 @@ public class Animation_Player : MonoBehaviour
 
 	public void SpellMagic()
 	{
-		Instantiate(m_magic, m_magicPoint.transform.position, Quaternion.identity);
+		Instantiate(m_magic, m_magicPoint.transform.position, Quaternion.Euler(this.transform.forward));
 	}
 }

@@ -10,14 +10,16 @@ TagManager:
   - zoneGaugeManager
   - playerStatus
   - demon_blue
+  - magic
+  - playerCam
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Magic
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

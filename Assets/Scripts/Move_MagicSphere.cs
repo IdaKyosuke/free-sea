@@ -17,15 +17,16 @@ public class Move_MagicSphere : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
 		// プレイヤーの正面を取得
-		GameObject player = GameObject.FindWithTag("Player");
-		m_direction = player.transform.forward;
+		GameObject playerCam = GameObject.FindWithTag("playerCam");
+		m_direction = playerCam.transform.forward.normalized;
 		m_durationTime = 0;
+		Debug.Log(m_direction);
 	}
 
     // Update is called once per frame
     void Update()
     {
-        m_rb.velocity = m_direction * m_speed * Time.deltaTime;
+        m_rb.velocity = m_direction * m_speed;
 
 		m_durationTime += Time.deltaTime;
 		// 一定時間経過で破壊
@@ -33,7 +34,6 @@ public class Move_MagicSphere : MonoBehaviour
 		{
 			Destroy(this.gameObject);
 		}
-
 	}
 
 	private void OnCollisionEnter(Collision other)
@@ -44,6 +44,8 @@ public class Move_MagicSphere : MonoBehaviour
 			Vector3 hitPos = other.contacts[0].point;
 			// 衝突位置にエフェクトを表示
 			Instantiate(m_hitEffect, hitPos, Quaternion.identity);
+
+			Debug.Log(1);
 			// 自分を破壊
 			Destroy(this.gameObject);
 		}

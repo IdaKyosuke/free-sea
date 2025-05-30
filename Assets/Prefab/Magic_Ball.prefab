@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 79057422251668698}
   - component: {fileID: 6019796901963436806}
   - component: {fileID: 2209680642545559101}
-  - component: {fileID: 4763342089484561922}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4763342089484561922
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4539032168908663559}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8140911180906412520
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,9 +96,9 @@ GameObject:
   - component: {fileID: 5911240153826993259}
   - component: {fileID: 6270712520070041656}
   - component: {fileID: 8293572268359258321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Magic_Ball
-  m_TagString: Untagged
+  m_TagString: magic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,8 +113,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 79057422251668698}
   m_Father: {fileID: 0}
@@ -183,7 +161,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.3
+  m_Time: 0.8
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -264,7 +242,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6270712520070041656
 Rigidbody:
@@ -288,10 +266,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &8293572268359258321
 MonoBehaviour:
@@ -307,5 +285,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitEffect: {fileID: 5956861682246875327, guid: 76cbb913e9fd8cd4f9ab8a955549e9e2,
     type: 3}
-  m_speed: 4
-  m_time: 0
+  m_speed: 20
+  m_time: 2
