@@ -11,17 +11,22 @@ public class FlyHeight_Anim : MonoBehaviour
 
 	private float height;
 
+	private bool m_isDeath;
+
     // Start is called before the first frame update
     void Start()
     {
         m_isUp = true;
 		m_durationTime = 0;
 		height = transform.position.y;
+		m_isDeath = false;
 	}
 
     // Update is called once per frame
     void Update()
     {
+		if (m_isDeath) return;
+
 		// è„â∫Ç…óhÇÁÇ∑
 		m_durationTime += Time.deltaTime;
 		float t = m_durationTime / m_moveTime;
@@ -41,5 +46,10 @@ public class FlyHeight_Anim : MonoBehaviour
 			m_isUp = !m_isUp;
 			height = transform.position.y;
 		}
+	}
+
+	public void IsDeath()
+	{
+		m_isDeath = true;
 	}
 }

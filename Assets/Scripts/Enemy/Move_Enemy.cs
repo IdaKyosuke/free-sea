@@ -8,10 +8,14 @@ public class Move_Enemy : MonoBehaviour
 {
 	[SerializeField] GameObject m_comboManager; // コンボ加算用
 	[SerializeField] GameObject m_hitEffect;    // ヒットエフェクト
+	[SerializeField] GameObject m_deathEffect;	// 死亡して消える瞬間に出すエフェクト
 	[SerializeField] GameObject m_playerStatus; // プレイヤーのステータス管理用オブジェクト
 	[SerializeField] GameObject m_enemyAnimator;	// 敵のアニメーションを管理するオブジェクト
 	[SerializeField] int m_exp = 5;	// 得られる経験値
 	[SerializeField] int m_hp = 1;  // 体力
+	[SerializeField] float m_deathEffectHeightDiff = 0.5f;	// 死亡時のエフェクトの高さ差分
+
+	private bool m_isDeath;
 
 	// 移動用
 	private NavMeshAgent m_agent;
@@ -33,16 +37,24 @@ public class Move_Enemy : MonoBehaviour
 		m_agent = GetComponent<NavMeshAgent>();
 		// プレイヤーのtransform
 		m_playerTransform = GameObject.FindWithTag("Player").transform;
+
+		m_isDeath = false;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		// 体力管理
-		if (m_hp == 0)
+		if (m_isDeath)
 		{
-			m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
-			m_hp = 1;
+			if(m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().FinishDeathAnim())
+			{
+				// 死亡アニメーションが終了したら
+				// 消える前にエフェクトを出す
+				Instantiate(m_deathEffect, new Vector3(transform.position.x, transform.position.y + m_deathEffectHeightDiff, transform.position.z), Quaternion.identity);
+				// オブジェクトを消す
+				Destroy(this.gameObject);
+			}
+			return;
 		}
 
 		if (m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().CanMove())
@@ -59,6 +71,8 @@ public class Move_Enemy : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if (m_isDeath) return;
+
 		// プレイヤーに攻撃された時
 		if (other.gameObject.CompareTag("Weapon_Player"))
 		{
@@ -71,6 +85,32 @@ public class Move_Enemy : MonoBehaviour
 
 			// ダメージを受ける
 			m_hp--;
+
+			if(m_hp > 0)
+			{
+				// まだ死亡していなかったら攻撃を受けるアニメーションを実行する
+				m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().GetHit();
+			}
+			else
+			{
+				// 死亡したら
+				// プレイヤーの経験値を追加
+				m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
+
+				// 死亡アニメーション
+				m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().IsDeath();
+				m_isDeath = true;
+			}
 		}
+	}
+
+	public void RotateForPlayer()
+	{
+		// プレイヤーの方を向く
+		transform.rotation = Quaternion.Slerp(
+			transform.rotation,
+			Quaternion.LookRotation(m_playerTransform.position - transform.position),
+			0.2f
+		);
 	}
 }

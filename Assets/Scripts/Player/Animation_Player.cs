@@ -29,8 +29,8 @@ public class Animation_Player : MonoBehaviour
 	[SerializeField] GameObject m_magic;
 	[SerializeField] GameObject m_magicPoint;
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
         m_anim = GetComponent<Animator>();
 		m_pastPos = transform.position;
@@ -156,7 +156,7 @@ public class Animation_Player : MonoBehaviour
 		}
 
 		// 移動アニメーション
-		if (transform.position != m_pastPos)
+		if (m_player.GetComponent<Move_Player>().GetMoveDir() != Vector3.zero)
 		{
 			m_anim.SetBool("walk", true);
 		}

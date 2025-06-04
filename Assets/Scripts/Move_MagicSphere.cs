@@ -38,16 +38,11 @@ public class Move_MagicSphere : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
-		if(other.gameObject.CompareTag("Enemy"))
-		{
-			// 衝突位置の取得
-			Vector3 hitPos = other.contacts[0].point;
-			// 衝突位置にエフェクトを表示
-			Instantiate(m_hitEffect, hitPos, Quaternion.identity);
-
-			Debug.Log(1);
-			// 自分を破壊
-			Destroy(this.gameObject);
-		}
+		// 衝突位置の取得
+		Vector3 hitPos = other.contacts[0].point;
+		// 衝突位置にエフェクトを表示
+		Instantiate(m_hitEffect, hitPos, Quaternion.identity);
+		// 自分を破壊
+		Destroy(this.gameObject);
 	}
 }
