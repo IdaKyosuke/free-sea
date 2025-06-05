@@ -12,6 +12,7 @@ TagManager:
   - demon_blue
   - magic
   - playerCam
+  - Weapon_Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,9 +21,9 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
-  - 
+  - Collider
+  - PlayerWeapon
+  - EnemyMagic
   - 
   - 
   - 

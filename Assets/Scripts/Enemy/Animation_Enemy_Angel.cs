@@ -8,7 +8,13 @@ using UnityEngine;
 
 public class Animation_Enemy_Angel : MonoBehaviour
 {
-	[SerializeField] GameObject m_wingAnim;	// 羽のアニメーション
+	[SerializeField] GameObject m_wingAnim; // 羽のアニメーション
+	[SerializeField] GameObject m_magicCollider;	// 魔法攻撃を使える距離かを判定する
+	[SerializeField] GameObject m_magicCircle;	// 魔法攻撃の際の魔法陣
+	[SerializeField, Range(1, 100)] int m_probability;  // 魔法攻撃が使われる確率（％）
+	[SerializeField] float m_magicRecastTime = 4.0f;    // 次に魔法攻撃の抽選に入るまでの時間
+	[SerializeField] GameObject[] m_magicPoints;	// 魔法陣を生成する場所
+
 	private Animator m_anim;
 	private float m_duration;
 	private bool m_canMove;
@@ -17,6 +23,8 @@ public class Animation_Enemy_Angel : MonoBehaviour
 	private bool m_finishDeathAnim;
 	private bool m_isGetHit;
 	private bool m_isDeath;
+	private bool m_attackMagic; // 魔法の攻撃を行った or 再抽選までのリキャスト時間かどうか
+	private float m_magicDuration;	// 魔法攻撃のリキャスト時間計算用
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +36,7 @@ public class Animation_Enemy_Angel : MonoBehaviour
 		m_finishDeathAnim = false;
 		m_isGetHit = false;
 		m_isDeath = false;
+		m_attackMagic = false;
 
 		// AnimatorからObservableStateMachineTriggerの参照を取得
 		ObservableStateMachineTrigger trigger =
@@ -81,7 +90,8 @@ public class Animation_Enemy_Angel : MonoBehaviour
     {
 		if (m_isDeath) return;
 
-		if(!m_isGetHit && m_isAttacked)
+		// 攻撃のリキャスト時間を計算する
+		if(m_isAttacked)
 		{
 			m_duration += Time.deltaTime;
 
@@ -89,9 +99,53 @@ public class Animation_Enemy_Angel : MonoBehaviour
 			{
 				m_duration = 0;
 				m_isAttacked = false;
+
+				if(m_attackMagic)
+				{
+					// 魔法攻撃で移動が制限されているとき、動けるようにする
+					m_canMove = true;
+				}
 			}
 		}
+
+		AttackMagic();
     }
+
+	private void AttackMagic()
+	{
+		// 魔法攻撃に関しての処理
+		if (!m_isGetHit && !m_isAttacked)
+		{
+			if (!m_attackMagic && !m_magicCollider.GetComponent<Collider_MagicArea>().ClosePlayer())
+			{
+				// 攻撃を受けていない && 攻撃のリキャスト時間でない && プレイヤーと近すぎない && 魔法攻撃のリキャスト時間でない
+				int prob = UnityEngine.Random.Range(0, 101);
+				if (prob <= m_probability)
+				{
+					// 設定していた確率内だった場合魔法攻撃をする
+					foreach (var point in m_magicPoints)
+					{
+						// 魔法陣を生成する
+						Instantiate(m_magicCircle, point.transform.position, Quaternion.Euler(90, 0, 0));
+					}
+					m_isAttacked = true;
+					m_canMove = false;
+				}
+				m_attackMagic = true;
+			}
+		}
+
+		// 魔法攻撃のリキャスト時間
+		if (m_attackMagic)
+		{
+			m_magicDuration += Time.deltaTime;
+			if (m_magicDuration >= m_magicRecastTime)
+			{
+				m_attackMagic = false;
+				m_magicDuration = 0;
+			}
+		}
+	}
 
 	private void OnTriggerStay(Collider other)
 	{

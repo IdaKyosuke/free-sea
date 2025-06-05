@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5645701923505146173}
   - component: {fileID: 2898753474311682767}
   - component: {fileID: 3882865547197470788}
+  - component: {fileID: 1899527172884234297}
   m_Layer: 0
   m_Name: Magic_Holy
   m_TagString: Untagged
@@ -26,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649482745659339993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6759521, y: -0, z: -0, w: 0.7369456}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.4, y: 2.8, z: -1}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5257714684661746180}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 85.056, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &2898753474311682767
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4889,6 +4890,23 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1899527172884234297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649482745659339993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e03ac516e3df3448593d420c2f97f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_magic: {fileID: 8140911180906412520, guid: b6915518a00e4ad41a6e226a4f86dff4, type: 3}
+  m_amount: 3
+  m_diray: 3
+  m_waitTime: 3
+  m_fadeTime: 1
 --- !u!1 &7532393354183106692
 GameObject:
   m_ObjectHideFlags: 0

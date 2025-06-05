@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6166356284105588967}
   m_Layer: 0
   m_Name: MagicCol
-  m_TagString: Weapon_Player
+  m_TagString: Weapon_Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 5086514728938460767}
   - component: {fileID: 6317032986190485481}
   m_Layer: 0
-  m_Name: Impact_Magic
+  m_Name: Impact_Magic_Angel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.14901957, g: 0.77553576, b: 0.9529412, a: 1}
+      maxColor: {r: 0.9529412, g: 0.9105884, b: 0.14901957, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5168,7 +5168,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.14901961, g: 0.7764706, b: 0.9529412, a: 1}
+      maxColor: {r: 0.9529412, g: 0.9098039, b: 0.14901961, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10056,7 +10056,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.110137075, g: 0.5764082, b: 0.7075472, a: 1}
+      maxColor: {r: 0.9529412, g: 0.9098039, b: 0.14901961, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
