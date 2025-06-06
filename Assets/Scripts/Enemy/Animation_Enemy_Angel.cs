@@ -184,6 +184,7 @@ public class Animation_Enemy_Angel : MonoBehaviour
 	{
 		m_anim.SetTrigger("death");
 		m_isDeath = true;
+		Debug.Log(1);
 	}
 
 	// ダメージを受けるアニメーションを実行する

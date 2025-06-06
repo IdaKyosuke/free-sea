@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6418848154281517561}
   - component: {fileID: 6166356284105588967}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MagicCol
   m_TagString: Weapon_Player
   m_Icon: {fileID: 0}

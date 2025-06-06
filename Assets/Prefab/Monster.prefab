@@ -2385,8 +2385,8 @@ MonoBehaviour:
   m_magicCollider: {fileID: 3880445536125071850}
   m_magicCircle: {fileID: 649482745659339993, guid: 2b0f181c0eb420f479d8115567fb9d9a,
     type: 3}
-  m_probability: 100
-  m_magicRecastTime: 4
+  m_probability: 20
+  m_magicRecastTime: 10
   m_magicPoints:
   - {fileID: 5930489975095775086}
   - {fileID: 3858711219526516360}

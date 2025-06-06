@@ -129,7 +129,7 @@ public class Move_Player : MonoBehaviour
 	public void SetCamFront()
 	{
 		// プレイヤーの回転
-		transform.rotation = Quaternion.LookRotation(m_cam.transform.forward);
+		transform.forward = m_cam.transform.forward;
 	}
 
 	// プレイヤーの移動方向を取得
