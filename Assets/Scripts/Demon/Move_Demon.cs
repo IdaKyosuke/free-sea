@@ -17,4 +17,10 @@ public class Move_Demon : MonoBehaviour
 	{
 		return m_demon.Name();
 	}
+
+	// ステータスの実数値用に倍率を取得
+	public float GetMag(Status.StatusType type)
+	{
+		return m_demon.GetMag(type);
+	}
 }

@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: "\u30DD\u30E0\u30DD\u30E0\u30D7\u30EA\u30F3"
   m_type: 0
+  m_mag:
+  - 100
+  - 10
+  - 10
+  - 1

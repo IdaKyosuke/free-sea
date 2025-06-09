@@ -75,9 +75,6 @@ public class Move_Player : MonoBehaviour
 
 		if (m_moveDirection != Vector3.zero)
 		{
-			// rigidBodyを使った移動
-			m_rb.velocity = m_moveDirection * (Input.GetKey("left shift") ? m_runSpeed : m_walkSpeed) - new Vector3(0, m_rb.velocity.y, 0);
-
 			if (Input.GetKey("left shift"))
 			{
 				m_isRun = true;
@@ -86,6 +83,9 @@ public class Move_Player : MonoBehaviour
 			{
 				m_isRun = false;
 			}
+
+			// rigidBodyを使った移動
+			m_rb.velocity = m_moveDirection * (Input.GetKey("left shift") ? m_runSpeed : m_walkSpeed) + new Vector3(0, m_rb.velocity.y, 0);
 
 			// プレイヤーの回転
 			transform.rotation = Quaternion.LookRotation(m_moveDirection);
@@ -129,7 +129,7 @@ public class Move_Player : MonoBehaviour
 	public void SetCamFront()
 	{
 		// プレイヤーの回転
-		transform.forward = m_cam.transform.forward;
+		transform.rotation = Quaternion.Euler(new Vector3(m_cam.transform.rotation.x, 0, m_cam.transform.rotation.z));
 	}
 
 	// プレイヤーの移動方向を取得

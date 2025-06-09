@@ -29,6 +29,14 @@ public class Animation_Player : MonoBehaviour
 	[SerializeField] GameObject m_magic;
 	[SerializeField] GameObject m_magicPoint;
 
+	// 魔法攻撃（必殺技）用のオーラ
+	[SerializeField] GameObject m_aura;
+	[SerializeField] GameObject m_lightning;
+
+	private bool m_canSpecialAttack;    // 必殺技を撃てるかどうか
+	private bool m_isAttackSpecial;		// 必殺技を発動中か
+
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -36,6 +44,8 @@ public class Animation_Player : MonoBehaviour
 		m_pastPos = transform.position;
 		m_stopMove = false;
 		m_weaponCol.enabled = false;
+		m_canSpecialAttack = true;
+		m_isAttackSpecial = false;
 
 		// TrailRendererを無効にする
 		m_trail.GetComponent<TrailRenderer>().emitting = false;
@@ -104,7 +114,6 @@ public class Animation_Player : MonoBehaviour
 				if (info.IsName("Base Layer.Attack3"))
 				{
 					// アニメーションの動きに合わせて位置合わせ
-					SetModelPos();
 
 					if (!m_attackAnimFlg[0])
 					{
@@ -117,7 +126,6 @@ public class Animation_Player : MonoBehaviour
 				// 位置合わせ
 				if (info.IsName("Base Layer.Rolling"))
 				{
-					SetModelPos();
 					CanMove();
 				}
 
@@ -126,6 +134,12 @@ public class Animation_Player : MonoBehaviour
 					CanMove();
 				}
 
+				// 必殺技終了
+				if(info.IsName("Base Layer.Attack_Special"))
+				{
+					m_isAttackSpecial = false;
+					CanMove();
+				}
 			}).AddTo(this);
 	}
 
@@ -135,6 +149,16 @@ public class Animation_Player : MonoBehaviour
 		if(m_pauseManager.GetComponent<PauseSceneManager>().IsPause())
 		{
 			return;
+		}
+
+		foreach(var attackAnimFlg in m_attackAnimFlg)
+		{
+			if(attackAnimFlg)
+			{
+				m_canSpecialAttack = false;
+				break;
+			}
+			m_canSpecialAttack = true;
 		}
 
 		Move();
@@ -170,24 +194,29 @@ public class Animation_Player : MonoBehaviour
 		{
 			m_anim.SetTrigger("spell");
 		}
-
-		/*
+		
 		if(Input.GetKeyDown("space"))
 		{
 			m_anim.SetTrigger("rolling");
 		}
-		 */
-
+		
 		m_pastPos = transform.position;
 	}
 
 	// 攻撃アニメーション
 	private void AttackAnim()
 	{
-		if(Input.GetMouseButtonDown(0))
+		if(!m_isAttackSpecial && Input.GetMouseButtonDown(0))
 		{
 			// 左クリックで攻撃
 			m_anim.SetTrigger("attack");
+		}
+
+		// 必殺技
+		if(m_canSpecialAttack && Input.GetKeyDown("e"))
+		{
+			m_anim.SetTrigger("attack_special");
+			m_isAttackSpecial = true;
 		}
 	}
 
@@ -204,6 +233,8 @@ public class Animation_Player : MonoBehaviour
 		{
 			// 移動を制限
 			m_stopMove = true;
+			// アニメーションの動きを反映
+			m_anim.applyRootMotion = true;
 		}
 	}
 	public void CanMove()
@@ -212,6 +243,8 @@ public class Animation_Player : MonoBehaviour
 		{
 			// 移動制限を解除
 			m_stopMove = false;
+			// アニメーションの動きを反映
+			m_anim.applyRootMotion = false;
 		}
 	}
 
@@ -223,12 +256,6 @@ public class Animation_Player : MonoBehaviour
 	public void InactiveCol()
 	{
 		m_weaponCol.enabled = false;       
-	}
-
-	// 位置が変わるアニメーション終了時に位置合わせをする
-	public void SetModelPos()
-	{
-		m_player.GetComponent<Move_Player>().SetPos(transform.position);
 	}
 
 	public void ActiveTrail()

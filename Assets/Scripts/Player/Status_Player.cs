@@ -15,6 +15,7 @@ public class Status_Player : MonoBehaviour
 	private Status.StatusType m_statusType;
 	private int m_currentExp;   // 現在溜まっている経験値
 	private int m_nextExp;  // 次のレベルに必要な経験値
+	private float[] m_statusValue = new float[(int)Status.StatusType.Length - 1];	// ステータスの実数値の配列
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,6 +26,16 @@ public class Status_Player : MonoBehaviour
 		if(!m_demon)
 		{
 			m_demon = GameObject.FindWithTag("demon_blue");
+		}
+	}
+
+	private void Update()
+	{
+		// ステータスの実数値を計算する
+		for(int i = 0; i < (int)Status.StatusType.Length - 1; i++)
+		{
+			m_statusValue[i] = 
+				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Move_Demon>().GetMag((Status.StatusType)i);
 		}
 	}
 
@@ -72,11 +83,17 @@ public class Status_Player : MonoBehaviour
 		return l;
 	}
 
-	// ステータス取得
+	// ステータス取得（レベル）
 	public int GetStatus(Status.StatusType type)
 	{
 		int value = m_status.GetStatus(type);
 		return value;
+	}
+
+	// ステータスの実数値を取得
+	public float GetStatusValue(Status.StatusType type)
+	{
+		return m_statusValue[(int)type];
 	}
 
 	// ---- ステータス変更 ----
