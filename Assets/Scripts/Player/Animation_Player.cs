@@ -274,4 +274,17 @@ public class Animation_Player : MonoBehaviour
 	{
 		Instantiate(m_magic, m_magicPoint.transform.position, Quaternion.Euler(this.transform.forward));
 	}
+
+
+	// 必殺技関連
+	public void SetAura()
+	{
+		// オーラをまとわせる
+		Instantiate(m_aura, m_player.transform.position, Quaternion.identity);
+	}
+	public void SetEffect()
+	{
+		// 攻撃エフェクトを発生させる
+		Instantiate(m_lightning, m_player.transform.position, Quaternion.identity);
+	}
 }

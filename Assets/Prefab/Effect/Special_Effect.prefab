@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1555175269539122671}
   - component: {fileID: 5480242896372756331}
   - component: {fileID: 5526645356543598503}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Special_Effect
-  m_TagString: Untagged
+  m_TagString: Attack_Special
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
