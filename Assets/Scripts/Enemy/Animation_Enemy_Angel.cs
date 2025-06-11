@@ -13,7 +13,10 @@ public class Animation_Enemy_Angel : MonoBehaviour
 	[SerializeField] GameObject m_magicCircle;	// 魔法攻撃の際の魔法陣
 	[SerializeField, Range(1, 100)] int m_probability;  // 魔法攻撃が使われる確率（％）
 	[SerializeField] float m_magicRecastTime = 4.0f;    // 次に魔法攻撃の抽選に入るまでの時間
-	[SerializeField] GameObject[] m_magicPoints;	// 魔法陣を生成する場所
+	[SerializeField] GameObject[] m_magicPoints;    // 魔法陣を生成する場所
+
+	// 攻撃用当たり判定
+	[SerializeField] BoxCollider m_collider;
 
 	private Animator m_anim;
 	private float m_duration;
@@ -37,6 +40,8 @@ public class Animation_Enemy_Angel : MonoBehaviour
 		m_isGetHit = false;
 		m_isDeath = false;
 		m_attackMagic = false;
+		// 攻撃判定を消す
+		m_collider.enabled = false;
 
 		// AnimatorからObservableStateMachineTriggerの参照を取得
 		ObservableStateMachineTrigger trigger =
@@ -204,5 +209,16 @@ public class Animation_Enemy_Angel : MonoBehaviour
 	public bool FinishDeathAnim()
 	{
 		return m_finishDeathAnim;
+	}
+
+	// ----- 攻撃判定を有効にする -----
+	public void ActiveCol()
+	{
+		m_collider.enabled = true;
+	}
+
+	public void EnactiveCol()
+	{
+		m_collider.enabled = false;
 	}
 }

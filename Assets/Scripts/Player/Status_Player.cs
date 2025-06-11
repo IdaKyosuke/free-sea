@@ -15,7 +15,9 @@ public class Status_Player : MonoBehaviour
 	private Status.StatusType m_statusType;
 	private int m_currentExp;   // 現在溜まっている経験値
 	private int m_nextExp;  // 次のレベルに必要な経験値
-	private float[] m_statusValue = new float[(int)Status.StatusType.Length - 1];	// ステータスの実数値の配列
+	private float[] m_statusValue = new float[(int)Status.StatusType.Length - 1];   // ステータスの実数値の配列
+
+	private float m_hp;	// 現在の体力
 
 	// Start is called before the first frame update
 	void Start()
@@ -23,7 +25,9 @@ public class Status_Player : MonoBehaviour
 		m_status.Initialize();
 		m_currentExp = 0;
 		m_nextExp = m_needExp;
-		if(!m_demon)
+		// hpを初期化
+		m_hp = m_statusValue[(int)Status.StatusType.Hp];
+		if (!m_demon)
 		{
 			m_demon = GameObject.FindWithTag("demon_blue");
 		}
@@ -36,6 +40,16 @@ public class Status_Player : MonoBehaviour
 		{
 			m_statusValue[i] = 
 				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Move_Demon>().GetMag((Status.StatusType)i);
+
+
+			// hpに関するステータスを下げたとき、現在のhpを下回ったら現在のhpを補正する
+			if ((Status.StatusType)i == Status.StatusType.Hp)
+			{
+				if(m_statusValue[i] < m_hp)
+				{
+					m_hp = m_statusValue[i];
+				}
+			}
 		}
 	}
 
@@ -70,12 +84,25 @@ public class Status_Player : MonoBehaviour
 	}
 
 	// ダメージ処理
-	public int GetHit()
+	public void GetHit(int damage)
+	{
+		m_hp -= damage;
+		if(m_hp <= 0)
+		{
+			// 最低値を0にする
+			m_hp = 0;
+		}
+	}
+
+	// 攻撃処理
+	public int TakeHit()
 	{
 		int damage = m_status.GetStatus(Status.StatusType.Atk);
 		return damage;
 	}
 
+
+	// ----- ステータスを取得 -----
 	// レベルを取得
 	public int GetLv() 
 	{
@@ -94,6 +121,12 @@ public class Status_Player : MonoBehaviour
 	public float GetStatusValue(Status.StatusType type)
 	{
 		return m_statusValue[(int)type];
+	}
+
+	// 現在のHpを取得
+	public float CurrentHp()
+	{
+		return m_hp;
 	}
 
 	// ---- ステータス変更 ----

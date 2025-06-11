@@ -8,12 +8,15 @@ public class ZoneGaugeManager : MonoBehaviour
 	[SerializeField] Image m_gauge; // ƒQ[ƒW‚Ì‰æ‘œ
 	[SerializeField] float m_chargeValue = 0.1f;    // UŒ‚‚ÌƒqƒbƒgŽž‚É—­‚Ü‚éƒQ[ƒW—Ê
 	[SerializeField] float m_maxValue = 100.0f; // ƒQ[ƒW‚ÌÅ‘å—Ê
-	private float m_currentValue;	// Œ»Ý‚ÌƒQ[ƒW—Ê
+	private float m_currentValue;   // Œ»Ý‚ÌƒQ[ƒW—Ê
+
+	private bool m_isMax;	// ƒQ[ƒW‚ªÅ‘å‚©
 
     // Start is called before the first frame update
     void Start()
     {
 		m_currentValue = 0;
+		m_isMax = false;
 	}
 
     // Update is called once per frame
@@ -31,7 +34,19 @@ public class ZoneGaugeManager : MonoBehaviour
 			if(m_currentValue >= m_maxValue)
 			{
 				m_currentValue = m_maxValue;
+				m_isMax = true;
 			}
         }
+	}
+
+	public void ResetGauge()
+	{
+		m_isMax = false;
+		m_currentValue = 0;
+	}
+
+	public bool IsMax()
+	{
+		return m_isMax;
 	}
 }

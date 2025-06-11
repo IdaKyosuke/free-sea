@@ -73,7 +73,7 @@ public class Move_Enemy : MonoBehaviour
 	{
 		if (m_isDeath) return;
 
-		// プレイヤーに攻撃された時
+		// プレイヤーに攻撃された時（通常攻撃）
 		if (other.gameObject.CompareTag("Weapon_Player"))
 		{
 			// コンボを加算
@@ -101,6 +101,18 @@ public class Move_Enemy : MonoBehaviour
 				m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().IsDeath();
 				m_isDeath = true;
 			}
+		}
+
+		// 必殺技を受けたとき
+		if(other.gameObject.CompareTag("Attack_Special"))
+		{
+			m_hp = 0;
+			// プレイヤーの経験値を追加
+			m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
+
+			// 死亡アニメーション
+			m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().IsDeath();
+			m_isDeath = true;
 		}
 	}
 

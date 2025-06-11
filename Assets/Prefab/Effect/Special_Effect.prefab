@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1555175269539122671}
   - component: {fileID: 5480242896372756331}
   - component: {fileID: 5526645356543598503}
-  m_Layer: 10
+  - component: {fileID: 6847200478774591416}
+  m_Layer: 8
   m_Name: Special_Effect
   m_TagString: Attack_Special
   m_Icon: {fileID: 0}
@@ -4830,3 +4831,26 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!136 &6847200478774591416
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895685206557448784}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}

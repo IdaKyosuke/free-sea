@@ -34,8 +34,10 @@ public class Animation_Player : MonoBehaviour
 	[SerializeField] GameObject m_lightning;
 
 	private bool m_canSpecialAttack;    // •KE‹Z‚ğŒ‚‚Ä‚é‚©‚Ç‚¤‚©
-	private bool m_isAttackSpecial;		// •KE‹Z‚ğ”­“®’†‚©
+	private bool m_isAttackSpecial;     // •KE‹Z‚ğ”­“®’†‚©
 
+	// •KE‹ZƒQ[ƒW‚ª—­‚Ü‚Á‚Ä‚¢‚é‚©Šm”F—p
+	[SerializeField] GameObject m_zoneManager;
 
 	// Start is called before the first frame update
 	void Start()
@@ -46,6 +48,10 @@ public class Animation_Player : MonoBehaviour
 		m_weaponCol.enabled = false;
 		m_canSpecialAttack = true;
 		m_isAttackSpecial = false;
+		if(!m_zoneManager)
+		{
+			m_zoneManager = GameObject.FindWithTag("zoneGaugeManager");
+		}
 
 		// TrailRenderer‚ğ–³Œø‚É‚·‚é
 		m_trail.GetComponent<TrailRenderer>().emitting = false;
@@ -212,11 +218,17 @@ public class Animation_Player : MonoBehaviour
 			m_anim.SetTrigger("attack");
 		}
 
-		// •KE‹Z
-		if(m_canSpecialAttack && Input.GetKeyDown("e"))
+		// •KEƒQ[ƒW‚ª—­‚Ü‚Á‚Ä‚½‚ç
+		if(m_zoneManager.GetComponent<ZoneGaugeManager>().IsMax())
 		{
-			m_anim.SetTrigger("attack_special");
-			m_isAttackSpecial = true;
+			// •KE‹Z
+			if(m_canSpecialAttack && Input.GetKeyDown("e"))
+			{
+				m_anim.SetTrigger("attack_special");
+				m_isAttackSpecial = true;
+				// ƒQ[ƒW‚ğƒŠƒZƒbƒg
+				m_zoneManager.GetComponent<ZoneGaugeManager>().ResetGauge();
+			}
 		}
 	}
 
@@ -276,7 +288,7 @@ public class Animation_Player : MonoBehaviour
 	}
 
 
-	// •KE‹ZŠÖ˜A
+	// ----- •KE‹ZŠÖ˜A -----
 	public void SetAura()
 	{
 		// ƒI[ƒ‰‚ğ‚Ü‚Æ‚í‚¹‚é
