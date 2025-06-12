@@ -1296,6 +1296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 323941539}
+  - component: {fileID: 323941540}
   m_Layer: 5
   m_Name: HpGauge
   m_TagString: Untagged
@@ -1323,6 +1324,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &323941540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323941538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9d4b22108302647a2da707bc9a9192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gauge: {fileID: 1327011027}
+  m_playerStatus: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -8523,6 +8538,7 @@ MonoBehaviour:
   m_runSpeed: 10
   m_cam: {fileID: 2071871317}
   m_model: {fileID: 637643819}
+  m_status: {fileID: 0}
 --- !u!114 &637643823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10531,6 +10547,7 @@ MonoBehaviour:
   m_exp: 0
   m_hp: 1
   m_deathEffectHeightDiff: 0.5
+  m_damage: 0
   m_playerTransform: {fileID: 0}
 --- !u!136 &1220634769
 CapsuleCollider:
@@ -11451,12 +11468,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588969654}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.4010725, y: -3.8500543, z: -3.5113428}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 54.111324, y: -19.250273, z: -20.09266}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 6768212346490497902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1600925591
 GameObject:
@@ -20940,6 +20957,7 @@ Transform:
   - {fileID: 6450343803145409084}
   - {fileID: 2601463793943109563}
   - {fileID: 8322954566314375428}
+  - {fileID: 1588969655}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6768212346490497903
@@ -23280,7 +23298,6 @@ SceneRoots:
   - {fileID: 1189388514}
   - {fileID: 1532923253}
   - {fileID: 1431109553}
-  - {fileID: 1588969655}
   - {fileID: 6768212346490497902}
   - {fileID: 1220634772}
   - {fileID: 419813618}

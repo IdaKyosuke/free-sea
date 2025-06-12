@@ -7,6 +7,7 @@ public class Camera_Player : MonoBehaviour
 	[SerializeField] GameObject m_player;
 	[SerializeField] GameObject m_pivot;
 	[SerializeField, Range(0f, 1f)] float m_camRotSpeedX = 0.1f;    // カメラのx軸回転のスピード
+	[SerializeField, Range(1, 10)] int m_camRange = 1;		// カメラとプレイヤーの距離
 	private float m_maxCamHeight;   // カメラの高さの最大値
 	[SerializeField] float m_minCamHeight = 0.2f;   // カメラの高さの最小値
 	[SerializeField] float m_camDiffZ = -4.0f;  // ゲーム開始時のプレイヤーのZ座標とカメラのZ座標の差分

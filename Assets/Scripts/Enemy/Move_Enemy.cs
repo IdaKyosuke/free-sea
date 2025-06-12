@@ -13,7 +13,8 @@ public class Move_Enemy : MonoBehaviour
 	[SerializeField] GameObject m_enemyAnimator;	// 敵のアニメーションを管理するオブジェクト
 	[SerializeField] int m_exp = 5;	// 得られる経験値
 	[SerializeField] int m_hp = 1;  // 体力
-	[SerializeField] float m_deathEffectHeightDiff = 0.5f;	// 死亡時のエフェクトの高さ差分
+	[SerializeField] float m_deathEffectHeightDiff = 0.5f;  // 死亡時のエフェクトの高さ差分
+	[SerializeField] int m_damage;	// プレイヤー攻撃時に与えるダメージ
 
 	private bool m_isDeath;
 
@@ -94,12 +95,11 @@ public class Move_Enemy : MonoBehaviour
 			else
 			{
 				// 死亡したら
-				// プレイヤーの経験値を追加
-				m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
-
+				m_isDeath = true;
 				// 死亡アニメーション
 				m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().IsDeath();
-				m_isDeath = true;
+				// プレイヤーの経験値を追加
+				m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
 			}
 		}
 
@@ -124,5 +124,11 @@ public class Move_Enemy : MonoBehaviour
 			Quaternion.LookRotation(m_playerTransform.position - transform.position),
 			0.2f
 		);
+	}
+
+	// 与えるダメージをコライダーに渡す処理
+	public int Damage()
+	{
+		return m_damage;
 	}
 }

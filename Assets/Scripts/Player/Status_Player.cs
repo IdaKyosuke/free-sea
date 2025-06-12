@@ -17,7 +17,8 @@ public class Status_Player : MonoBehaviour
 	private int m_nextExp;  // 次のレベルに必要な経験値
 	private float[] m_statusValue = new float[(int)Status.StatusType.Length - 1];   // ステータスの実数値の配列
 
-	private float m_hp;	// 現在の体力
+	private float m_hp; // 現在の体力
+	private bool m_isDeath;	// 死んだか
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,16 +26,29 @@ public class Status_Player : MonoBehaviour
 		m_status.Initialize();
 		m_currentExp = 0;
 		m_nextExp = m_needExp;
-		// hpを初期化
-		m_hp = m_statusValue[(int)Status.StatusType.Hp];
+		m_isDeath = false;
 		if (!m_demon)
 		{
 			m_demon = GameObject.FindWithTag("demon_blue");
 		}
+		// ステータスの実数値を計算する
+		for (int i = 0; i < (int)Status.StatusType.Length - 1; i++)
+		{
+			m_statusValue[i] =
+				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Move_Demon>().GetMag((Status.StatusType)i);
+		}
+		// hpを初期化
+		m_hp = m_statusValue[(int)Status.StatusType.Hp];
 	}
 
 	private void Update()
 	{
+		// 死んだか判断
+		if(m_hp <= 0)
+		{
+			m_isDeath = true;
+			return;
+		}
 		// ステータスの実数値を計算する
 		for(int i = 0; i < (int)Status.StatusType.Length - 1; i++)
 		{
@@ -84,7 +98,7 @@ public class Status_Player : MonoBehaviour
 	}
 
 	// ダメージ処理
-	public void GetHit(int damage)
+	public void GetHit(float damage)
 	{
 		m_hp -= damage;
 		if(m_hp <= 0)
@@ -152,5 +166,11 @@ public class Status_Player : MonoBehaviour
 	public GameObject GetDemon()
 	{
 		return m_demon;
+	}
+
+	// 死亡フラグを返す
+	public bool IsDeath()
+	{
+		return m_isDeath;
 	}
 }

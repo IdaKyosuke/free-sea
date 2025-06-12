@@ -1110,6 +1110,7 @@ MonoBehaviour:
   m_exp: 5
   m_hp: 10
   m_deathEffectHeightDiff: 0.5
+  m_damage: 5
   m_playerTransform: {fileID: 0}
 --- !u!136 &5567901578853817088
 CapsuleCollider:
@@ -2385,7 +2386,7 @@ MonoBehaviour:
   m_magicCollider: {fileID: 3880445536125071850}
   m_magicCircle: {fileID: 649482745659339993, guid: 2b0f181c0eb420f479d8115567fb9d9a,
     type: 3}
-  m_probability: 20
+  m_probability: 10
   m_magicRecastTime: 10
   m_magicPoints:
   - {fileID: 5930489975095775086}
@@ -6465,6 +6466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1242654167699027831}
   - component: {fileID: 7352229118722299815}
+  - component: {fileID: 6877162577364919184}
   m_Layer: 0
   m_Name: Character1_RightHand
   m_TagString: Enemy_Weapon
@@ -6511,8 +6513,22 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.3, z: 0.2}
-  m_Center: {x: 0, y: -0.1, z: 0}
+  m_Size: {x: 0.2, y: 0.6, z: 0.2}
+  m_Center: {x: 0, y: -0.3, z: 0}
+--- !u!114 &6877162577364919184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241087850104801025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ea4374caf1b634597fa026bae2242d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerStatus: {fileID: 0}
+  m_parent: {fileID: 1484469882477332184}
 --- !u!1 &8258297721465987916
 GameObject:
   m_ObjectHideFlags: 0

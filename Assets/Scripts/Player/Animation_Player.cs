@@ -21,6 +21,8 @@ public class Animation_Player : MonoBehaviour
 	// 移動制限用
 	private bool m_stopMove;
 
+	private bool m_isDeath;	// 死亡したか
+
 	// 攻撃アニメーションが動いているか
 	const int AttackAnimNum = 3;
 	private bool[] m_attackAnimFlg = new bool[AttackAnimNum];
@@ -48,7 +50,8 @@ public class Animation_Player : MonoBehaviour
 		m_weaponCol.enabled = false;
 		m_canSpecialAttack = true;
 		m_isAttackSpecial = false;
-		if(!m_zoneManager)
+		m_isDeath = false;
+		if (!m_zoneManager)
 		{
 			m_zoneManager = GameObject.FindWithTag("zoneGaugeManager");
 		}
@@ -152,6 +155,8 @@ public class Animation_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (m_isDeath) return;
+
 		if(m_pauseManager.GetComponent<PauseSceneManager>().IsPause())
 		{
 			return;
@@ -298,5 +303,15 @@ public class Animation_Player : MonoBehaviour
 	{
 		// 攻撃エフェクトを発生させる
 		Instantiate(m_lightning, m_player.transform.position, Quaternion.identity);
+	}
+
+	// 死亡アニメーション
+	public void DeathAnim()
+	{
+		// 死亡フラグを共有
+		m_isDeath = true;
+
+		// アニメーション再生
+		m_anim.SetTrigger("death");
 	}
 }

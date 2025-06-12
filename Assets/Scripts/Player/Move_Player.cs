@@ -24,8 +24,11 @@ public class Move_Player : MonoBehaviour
 
 	// プレイヤーのモデル
 	[SerializeField] GameObject m_model;
+	// ステータスを管理するオブジェクト
+	[SerializeField] GameObject m_status;
 
 	private bool m_stopMove;    // 移動できるか取得する用
+	private bool m_isPlayDeathAnim;	// 死亡アニメーションを1回しか呼ばない用
 
 	// Start is called before the first frame update
 	void Start()
@@ -38,11 +41,27 @@ public class Move_Player : MonoBehaviour
 		m_camForward = Vector3.zero;
 		m_camRight = Vector3.zero;
 		m_stopMove = m_model.GetComponent<Animation_Player>().GetMoveFlg();
+		m_isPlayDeathAnim = false;
+		if (!m_status)
+		{
+			m_status = GameObject.FindWithTag("playerStatus");
+		}
 	}
 
     // Update is called once per frame
     void Update()
     {
+		if (m_status.GetComponent<Status_Player>().IsDeath())
+		{
+			// 死亡したら
+			if(!m_isPlayDeathAnim)
+			{
+				m_model.GetComponent<Animation_Player>().DeathAnim();
+				m_isPlayDeathAnim = true;
+			}
+			return;
+		}
+
 		// フラグの更新
 		m_stopMove = m_model.GetComponent<Animation_Player>().GetMoveFlg();
 		// 本来の移動

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6418848154281517561}
   - component: {fileID: 6166356284105588967}
+  - component: {fileID: 7782156531565489566}
   m_Layer: 0
   m_Name: MagicCol
   m_TagString: Weapon_Enemy
@@ -53,6 +54,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7782156531565489566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464915971217821534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8087d60090053499b1610162018bed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerStatus: {fileID: 0}
+  m_damage: 10
 --- !u!1 &5956861682246875327
 GameObject:
   m_ObjectHideFlags: 0
