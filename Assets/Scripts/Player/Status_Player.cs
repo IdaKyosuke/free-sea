@@ -10,7 +10,8 @@ public class Status_Player : MonoBehaviour
 	[SerializeField] Status m_status;
 	[SerializeField] int m_needExp = 10;
 	[SerializeField] int m_getSkillPoint = 2;	// レベルアップでもらえるスキルポイント
-	private GameObject m_demon;	// 契約中の悪魔
+	private GameObject m_demon; // 契約中の悪魔
+	[SerializeField] GameObject[] m_demonList;	// 契約可能な悪魔のリスト
 
 	private Status.StatusType m_statusType;
 	private int m_currentExp;   // 現在溜まっている経験値
@@ -35,7 +36,7 @@ public class Status_Player : MonoBehaviour
 		for (int i = 0; i < (int)Status.StatusType.Length - 1; i++)
 		{
 			m_statusValue[i] =
-				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Move_Demon>().GetMag((Status.StatusType)i);
+				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Demon_Status>().GetMag((Status.StatusType)i);
 		}
 		// hpを初期化
 		m_hp = m_statusValue[(int)Status.StatusType.Hp];
@@ -53,7 +54,7 @@ public class Status_Player : MonoBehaviour
 		for(int i = 0; i < (int)Status.StatusType.Length - 1; i++)
 		{
 			m_statusValue[i] = 
-				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Move_Demon>().GetMag((Status.StatusType)i);
+				GetStatus((Status.StatusType)i) * m_demon.GetComponent<Demon_Status>().GetMag((Status.StatusType)i);
 
 
 			// hpに関するステータスを下げたとき、現在のhpを下回ったら現在のhpを補正する
@@ -94,7 +95,7 @@ public class Status_Player : MonoBehaviour
 	private void GetSkillPoint()
 	{
 		// 悪魔の好む能力にいったん割り振られる
-		m_status.AddSkillPoint(m_demon.GetComponent<Move_Demon>().GetDemonType(), m_getSkillPoint);
+		m_status.AddSkillPoint(m_demon.GetComponent<Demon_Status>().GetDemonType(), m_getSkillPoint);
 	}
 
 	// ダメージ処理

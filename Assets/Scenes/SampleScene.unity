@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &4390684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4390685}
+  m_Layer: 0
+  m_Name: DemonPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4390685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4390684}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 637643825}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &46118861
 GameObject:
   m_ObjectHideFlags: 0
@@ -8480,7 +8511,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637643819}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 40
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8600,6 +8631,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4390685}
   - {fileID: 2054800080}
   - {fileID: 498668327}
   - {fileID: 1981496370}
@@ -8779,6 +8811,75 @@ Transform:
   m_Children:
   - {fileID: 2110245641}
   m_Father: {fileID: 586545563}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &727078336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 727078339}
+  - component: {fileID: 727078338}
+  - component: {fileID: 727078337}
+  m_Layer: 0
+  m_Name: Demons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &727078337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727078336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e4e15d126b8675499a6d1f46c1b118c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_demonPos: {fileID: 0}
+--- !u!195 &727078338
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727078336}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 7
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!4 &727078339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727078336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6768212346490497902}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &727705325
 GameObject:
@@ -10138,6 +10239,7 @@ GameObject:
   - component: {fileID: 1091437966}
   - component: {fileID: 1091437965}
   - component: {fileID: 1091437964}
+  - component: {fileID: 1091437968}
   m_Layer: 0
   m_Name: Stage
   m_TagString: Untagged
@@ -10232,6 +10334,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 260415245}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1091437968
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091437963}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c3ddb8873b9fd62449f6e310d663e7a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1092661295
 GameObject:
   m_ObjectHideFlags: 0
@@ -13075,7 +13198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gauge: {fileID: 541599549}
-  m_chargeValue: 1
+  m_chargeValue: 10
   m_maxValue: 100
 --- !u!4 &1963279928
 Transform:
@@ -13714,11 +13837,11 @@ MonoBehaviour:
   m_player: {fileID: 637643819}
   m_pivot: {fileID: 1689716290}
   m_camRotSpeedX: 0.1
+  m_camRange: 1
   m_minCamHeight: 0.2
   m_camDiffZ: -4
   m_camDiffY: 2.2
-  m_walkCamDist: 4
-  m_runCamDist: 6
+  m_camDist: 4
   m_pauseManager: {fileID: 1677528404}
 --- !u!1 &2071903045
 GameObject:
@@ -14018,7 +14141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2124077424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20666,7 +20789,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6768212346490497902}
-  - component: {fileID: 6768212346490497903}
+  - component: {fileID: 6768212346490497904}
+  - component: {fileID: 6768212346490497905}
+  - component: {fileID: 6768212346490497907}
   m_Layer: 0
   m_Name: Demon_Blue
   m_TagString: demon_blue
@@ -20918,9 +21043,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6243772395267224020}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5788076, y: 0.00000023841858, z: 0.5071895}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalRotation: {x: 0.07718272, y: -0, z: -0, w: 0.99701697}
+  m_LocalPosition: {x: 0, y: 1.4000001, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 271614276715615710}
@@ -20958,9 +21083,30 @@ Transform:
   - {fileID: 2601463793943109563}
   - {fileID: 8322954566314375428}
   - {fileID: 1588969655}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6768212346490497903
+  m_Father: {fileID: 727078339}
+  m_LocalEulerAnglesHint: {x: 8.853, y: 0, z: 0}
+--- !u!95 &6768212346490497904
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243772395267224020}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 2062168a512a03d4f810a91e334d9ff8, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6768212346490497905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20969,7 +21115,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6243772395267224020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4e15d126b8675499a6d1f46c1b118c, type: 3}
+  m_Script: {fileID: 11500000, guid: 07e0755caa4d5644eaeaad9ed5ed7fa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_changeAmount: 0.1
+  m_moveTime: 0.7
+--- !u!114 &6768212346490497907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243772395267224020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9dc4dc7ef21f04c9ed9084f1d692c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_demon: {fileID: 11400000, guid: 1852ebc011b09e0459afc119c7321faa, type: 2}
@@ -23298,6 +23458,6 @@ SceneRoots:
   - {fileID: 1189388514}
   - {fileID: 1532923253}
   - {fileID: 1431109553}
-  - {fileID: 6768212346490497902}
+  - {fileID: 727078339}
   - {fileID: 1220634772}
   - {fileID: 419813618}

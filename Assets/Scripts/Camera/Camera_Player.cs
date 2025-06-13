@@ -6,8 +6,8 @@ public class Camera_Player : MonoBehaviour
 {
 	[SerializeField] GameObject m_player;
 	[SerializeField] GameObject m_pivot;
-	[SerializeField, Range(0f, 1f)] float m_camRotSpeedX = 0.1f;    // カメラのx軸回転のスピード
-	[SerializeField, Range(1, 10)] int m_camRange = 1;		// カメラとプレイヤーの距離
+	[SerializeField, Range(0f, 1.0f)] float m_camRotSpeedX = 0.1f;    // カメラのx軸回転のスピード
+	[SerializeField, Range(1.0f, 5.0f)] float m_camRange = 1;		// カメラとプレイヤーの距離
 	private float m_maxCamHeight;   // カメラの高さの最大値
 	[SerializeField] float m_minCamHeight = 0.2f;   // カメラの高さの最小値
 	[SerializeField] float m_camDiffZ = -4.0f;  // ゲーム開始時のプレイヤーのZ座標とカメラのZ座標の差分
@@ -17,8 +17,7 @@ public class Camera_Player : MonoBehaviour
 	private Vector3 m_currentPos;
 	private Vector3 m_pastPos;
 	private Vector3 m_camDir;   // カメラからpivotへの方向ベクトル
-	[SerializeField] float m_walkCamDist = 4.0f;    // カメラとpivotの距離
-	[SerializeField] float m_runCamDist = 6.0f;    // カメラとpivotの距離
+	[SerializeField] float m_camDist = 4.0f;    // カメラとpivotの距離
 	private Vector3 m_diff; // 移動距離
 
 	private bool m_canMove; // カメラが動けるか
@@ -85,7 +84,7 @@ public class Camera_Player : MonoBehaviour
 
 		if (m_canMove)
 		{
-			transform.position = m_pivot.transform.position - (m_camDir * (m_player.GetComponent<Move_Player>().IsRun() ? m_runCamDist : m_walkCamDist));
+			transform.position = m_pivot.transform.position - (m_camDir * m_camDist * m_camRange);
 		}
 
 		// カメラの注視点をpivotにする

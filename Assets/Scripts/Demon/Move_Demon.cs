@@ -1,26 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Move_Demon : MonoBehaviour
 {
-	// 悪魔用ScriptableObject
-	[SerializeField] Demon m_demon;
+	[SerializeField] Transform m_demonPos;
+	private NavMeshAgent m_agent;
 
-	// 悪魔の好きなステータスを取得
-	public Status.StatusType GetDemonType()
+	private void Start()
 	{
-		return m_demon.GetType();
+		m_agent = GetComponent<NavMeshAgent>();
+		if(!m_demonPos)
+		{
+			m_demonPos = GameObject.FindWithTag("Player").transform.GetChild(0);
+		}
 	}
 
-	public string GetName()
+	private void Update()
 	{
-		return m_demon.Name();
-	}
-
-	// ステータスの実数値用に倍率を取得
-	public float GetMag(Status.StatusType type)
-	{
-		return m_demon.GetMag(type);
+		m_agent.SetDestination(m_demonPos.position);
 	}
 }

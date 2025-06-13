@@ -31,9 +31,9 @@ public class Show_DemonStatus : MonoBehaviour
     void Update()
     {
 		// 名前を表示
-		m_name.SetText("名前：" + m_playerStatus.GetComponent<Status_Player>().GetDemon().GetComponent<Move_Demon>().GetName());
+		m_name.SetText("名前：" + m_playerStatus.GetComponent<Status_Player>().GetDemon().GetComponent<Demon_Status>().GetName());
 
 		// ステータスを表示
-		m_faviriteStatus.SetText("『 " + m_showStatusName[(int)m_playerStatus.GetComponent<Status_Player>().GetDemon().GetComponent<Move_Demon>().GetDemonType()] + " 』を司る");
+		m_faviriteStatus.SetText("『 " + m_showStatusName[(int)m_playerStatus.GetComponent<Status_Player>().GetDemon().GetComponent<Demon_Status>().GetDemonType()] + " 』を司る");
     }
 }
