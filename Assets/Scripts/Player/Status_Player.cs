@@ -10,10 +10,17 @@ public class Status_Player : MonoBehaviour
 	[SerializeField] Status m_status;
 	[SerializeField] int m_needExp = 10;
 	[SerializeField] int m_getSkillPoint = 2;	// レベルアップでもらえるスキルポイント
-	private GameObject m_demon; // 契約中の悪魔
-	[SerializeField] GameObject[] m_demonList;	// 契約可能な悪魔のリスト
 
-	private Status.StatusType m_statusType;
+	// ----- 悪魔関連 -----
+	private GameObject m_demon; // 契約中の悪魔
+	[SerializeField] GameObject[] m_demonList;  // 契約可能な悪魔のリスト
+	private int m_demonIndex;   // 契約中の悪魔のindex番号
+	[SerializeField] GameObject m_changeSmoke;  // 悪魔を変更する時の煙
+	[SerializeField] float m_waitChangeTime;    // 悪魔の見た目を変更するまでの時間
+	[SerializeField] string m_upKey;	// 悪魔のIndex番号を上げる用
+	[SerializeField] string m_downKey;  // 悪魔のIndex番号を下げる用
+	private bool m_isDemonChange;		// 現在悪魔を変更中か
+
 	private int m_currentExp;   // 現在溜まっている経験値
 	private int m_nextExp;  // 次のレベルに必要な経験値
 	private float[] m_statusValue = new float[(int)Status.StatusType.Length - 1];   // ステータスの実数値の配列
@@ -28,6 +35,8 @@ public class Status_Player : MonoBehaviour
 		m_currentExp = 0;
 		m_nextExp = m_needExp;
 		m_isDeath = false;
+		m_demonIndex = 0;
+		m_isDemonChange = false;
 		if (!m_demon)
 		{
 			m_demon = GameObject.FindWithTag("demon_blue");
@@ -64,6 +73,20 @@ public class Status_Player : MonoBehaviour
 				{
 					m_hp = m_statusValue[i];
 				}
+			}
+		}
+
+		// 現在悪魔を変更中でない時
+		if(!m_isDemonChange)
+		{
+			// 悪魔を変更する用のキーが押されたら
+			if(Input.GetKeyDown(m_upKey))
+			{
+				StartCoroutine(ChangeDemon(1));
+			}
+			else if(Input.GetKeyDown(m_downKey))
+			{
+				StartCoroutine(ChangeDemon(-1));
 			}
 		}
 	}
@@ -173,5 +196,45 @@ public class Status_Player : MonoBehaviour
 	public bool IsDeath()
 	{
 		return m_isDeath;
+	}
+
+	// 契約中の悪魔を変更する(upkey=>1, downkey=>-1)
+	private IEnumerator ChangeDemon(int key)
+	{
+		// 悪魔を変更中のフラグを立てる
+		m_isDemonChange = true;
+
+		// インデックス番号を変更
+		m_demonIndex += key;
+
+		// 番号の補正
+		if (m_demonList.Length <= m_demonIndex)
+		{
+			m_demonIndex = 0;
+		}
+		else if(m_demonIndex < 0)
+		{
+			m_demonIndex = m_demonList.Length - 1;
+		}
+
+		// 変更前に煙を出す
+		Instantiate(m_changeSmoke, m_demon.transform.position, Quaternion.EulerAngles(new Vector3(-90, 0, 0)));
+
+		// 指定した時間待つ
+		yield return new WaitForSeconds(m_waitChangeTime);
+
+		// 変更前の悪魔を非アクティブに
+		m_demon.SetActive(false);
+
+		// 契約する悪魔を変更
+		SetDemon(m_demonList[m_demonIndex]);
+
+		// 契約後の悪魔をアクティブに
+		m_demon.SetActive(true);
+
+		// 悪魔の変更が終了したのでフラグを折る
+		m_isDemonChange = false;
+
+		yield return null;
 	}
 }

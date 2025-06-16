@@ -103,8 +103,25 @@ public class Move_Player : MonoBehaviour
 				m_isRun = false;
 			}
 
+			// 移動速度の上昇補正値を上げすぎないようにする
+			float spdBuff = m_status.GetComponent<Status_Player>().GetStatusValue(Status.StatusType.Spd);
+			switch(spdBuff)
+			{
+				case <= 4:
+					spdBuff *= 0.9f;
+					break;
+
+				case <= 8:
+					spdBuff *= 0.7f;
+					break;
+
+				default:
+					spdBuff *= 0.6f;
+					break;
+			}
+
 			// rigidBodyを使った移動
-			m_rb.velocity = m_moveDirection * (Input.GetKey("left shift") ? m_runSpeed : m_walkSpeed) + new Vector3(0, m_rb.velocity.y, 0);
+			m_rb.velocity = m_moveDirection * (Input.GetKey("left shift") ? m_runSpeed * spdBuff: m_walkSpeed) + new Vector3(0, m_rb.velocity.y, 0);
 
 			// プレイヤーの回転
 			transform.rotation = Quaternion.LookRotation(m_moveDirection);
