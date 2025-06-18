@@ -62,6 +62,9 @@ public class Move_Player : MonoBehaviour
 			return;
 		}
 
+		// 無敵時間の管理
+		m_status.GetComponent<Status_Player>().SetInvincible(m_model.GetComponent<Animation_Player>().IsInvincible());
+
 		// フラグの更新
 		m_stopMove = m_model.GetComponent<Animation_Player>().GetMoveFlg();
 		// 本来の移動

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Camera_Player : MonoBehaviour
@@ -8,6 +9,7 @@ public class Camera_Player : MonoBehaviour
 	[SerializeField] GameObject m_pivot;
 	[SerializeField, Range(0f, 1.0f)] float m_camRotSpeedX = 0.1f;    // カメラのx軸回転のスピード
 	[SerializeField, Range(1.0f, 5.0f)] float m_camRange = 1;		// カメラとプレイヤーの距離
+	[SerializeField, Range(1.0f, 5.0f)] float m_camSpecialRange = 1;		// カメラとプレイヤーの距離（必殺技用）
 	private float m_maxCamHeight;   // カメラの高さの最大値
 	[SerializeField] float m_minCamHeight = 0.2f;   // カメラの高さの最小値
 	[SerializeField] float m_camDiffZ = -4.0f;  // ゲーム開始時のプレイヤーのZ座標とカメラのZ座標の差分
@@ -19,6 +21,11 @@ public class Camera_Player : MonoBehaviour
 	private Vector3 m_camDir;   // カメラからpivotへの方向ベクトル
 	[SerializeField] float m_camDist = 4.0f;    // カメラとpivotの距離
 	private Vector3 m_diff; // 移動距離
+	private float m_camCurrentRange;    // カメラとプレイヤーの現在の距離
+	[SerializeField] float m_camChangeTime = 0.5f;  // カメラの距離を変えるときにかかる時間
+	private float m_durationTime;   // 時間カウント用
+	private bool m_isSpecial;	// カメラの距離を必殺技用の距離に変更する
+	private bool m_isNormal;	// カメラの距離を通常の距離に変更する
 
 	private bool m_canMove; // カメラが動けるか
 
@@ -28,6 +35,10 @@ public class Camera_Player : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		m_camCurrentRange = m_camRange;
+		m_durationTime = 0;
+		m_isSpecial = false;
+		m_isNormal = false;
 		if (!m_player)
 		{
 			m_player = GameObject.FindWithTag("Player");
@@ -82,9 +93,19 @@ public class Camera_Player : MonoBehaviour
 
 		m_camDir = Vector3.Normalize(m_pivot.transform.position - pos);
 
+		// カメラの距離を変更する
+		if(m_isSpecial)
+		{
+			SetSpecialCam();
+		}
+		else if(m_isNormal)
+		{
+			ResetCam();
+		}
+
 		if (m_canMove)
 		{
-			transform.position = m_pivot.transform.position - (m_camDir * m_camDist * m_camRange);
+			transform.position = m_pivot.transform.position - (m_camDir * m_camDist * m_camCurrentRange);
 		}
 
 		// カメラの注視点をpivotにする
@@ -95,5 +116,49 @@ public class Camera_Player : MonoBehaviour
 	{
 		// 動けるかどうかのフラグを反転させる
 		m_canMove = !m_canMove;
+	}
+
+	// 必殺技用にカメラの距離を取り始める
+	public void SetCamRangeForSpecial()
+	{
+		m_isSpecial = true;
+	}
+
+	// 必殺技発動時にカメラを遠くする
+	private void SetSpecialCam()
+	{
+		m_durationTime += Time.deltaTime;
+		float t = m_durationTime / m_camChangeTime;
+		if(t >= 1.0f)
+		{
+			t = 1.0f;
+			m_isSpecial = false;
+			m_durationTime = 0.0f;
+		}
+
+		// 距離を必殺技用にする
+		m_camCurrentRange = Mathf.Lerp(m_camCurrentRange, m_camSpecialRange, t);
+	}
+
+	// 通常のカメラ距離に戻し始める
+	public void SetCamRangeForNormal()
+	{
+		m_isNormal = true;
+	}
+
+	// 必殺技終了時に元の距離に戻す
+	private void ResetCam()
+	{
+		m_durationTime += Time.deltaTime;
+		float t = m_durationTime / m_camChangeTime;
+		if (t >= 1.0f)
+		{
+			t = 1.0f;
+			m_isNormal = false;
+			m_durationTime = 0.0f;
+		}
+
+		// 距離を通常に戻す
+		m_camCurrentRange = Mathf.Lerp(m_camCurrentRange, m_camRange, t);
 	}
 }

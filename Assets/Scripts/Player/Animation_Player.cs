@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Animation_Player : MonoBehaviour
 {
+	[SerializeField] GameObject m_playerCam;
 	[SerializeField] GameObject m_player;
 	[SerializeField] BoxCollider m_weaponCol;
 	[SerializeField] GameObject m_trail;	// TrailRendererが入ったオブジェクト
@@ -41,6 +42,9 @@ public class Animation_Player : MonoBehaviour
 	// 必殺技ゲージが溜まっているか確認用
 	[SerializeField] GameObject m_zoneManager;
 
+	// 今が無敵時間かどうか
+	private bool m_isInvincible;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -51,6 +55,7 @@ public class Animation_Player : MonoBehaviour
 		m_canSpecialAttack = true;
 		m_isAttackSpecial = false;
 		m_isDeath = false;
+		m_isInvincible = false;
 		if (!m_zoneManager)
 		{
 			m_zoneManager = GameObject.FindWithTag("zoneGaugeManager");
@@ -89,10 +94,22 @@ public class Animation_Player : MonoBehaviour
 					m_attackAnimFlg[2] = true;
 				}
 
+				// ローリング時に無敵判定を用意する
+				if (info.IsName("Base Layer.Rolling"))
+				{
+					m_isInvincible = true;
+				}
+
 				// 魔法アニメーション
-				if(info.IsName("Base Layer.Spell_Magic"))
+				if (info.IsName("Base Layer.Spell_Magic"))
 				{
 					m_player.GetComponent<Move_Player>().SetCamFront();
+				}
+
+				// 必殺技開始時に無敵にする
+				if(info.IsName("Base Layer.Attack_Special"))
+				{
+					m_isInvincible = true;
 				}
 			}).AddTo(this);
 
@@ -136,6 +153,8 @@ public class Animation_Player : MonoBehaviour
 				if (info.IsName("Base Layer.Rolling"))
 				{
 					CanMove();
+					// 無敵解除
+					m_isInvincible = false;	
 				}
 
 				if(info.IsName("Base Layer.Attack_Spell"))
@@ -147,6 +166,7 @@ public class Animation_Player : MonoBehaviour
 				if(info.IsName("Base Layer.Attack_Special"))
 				{
 					m_isAttackSpecial = false;
+					m_isInvincible = true;
 					CanMove();
 				}
 			}).AddTo(this);
@@ -235,12 +255,25 @@ public class Animation_Player : MonoBehaviour
 				m_zoneManager.GetComponent<ZoneGaugeManager>().ResetGauge();
 			}
 		}
+
+		// 必殺技（テスト用）
+		if (m_canSpecialAttack && Input.GetKeyDown("e"))
+		{
+			m_anim.SetTrigger("attack_special");
+			m_isAttackSpecial = true;
+		}
 	}
 
 	// 移動できる状態か取得
 	public bool GetMoveFlg()
 	{
 		return m_stopMove;
+	}
+
+	// 今が無敵時間かを取得
+	public bool IsInvincible()
+	{
+		return m_isInvincible;
 	}
 
 	// ---- 移動できないアニメーションにつける関数 ----
@@ -303,6 +336,18 @@ public class Animation_Player : MonoBehaviour
 	{
 		// 攻撃エフェクトを発生させる
 		Instantiate(m_lightning, m_player.transform.position, Quaternion.identity);
+	}
+
+	// カメラの距離を必殺技用にする
+	public void SetCamSpecial()
+	{
+		m_playerCam.GetComponent<Camera_Player>().SetCamRangeForSpecial();
+	}
+
+	// カメラの距離を通常にする
+	public void SetCamNormal()
+	{
+		m_playerCam.GetComponent<Camera_Player>().SetCamRangeForNormal();
 	}
 
 	// 死亡アニメーション

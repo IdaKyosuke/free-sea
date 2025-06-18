@@ -85744,6 +85744,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.16666667
+    functionName: SetCamSpecial
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.5
     functionName: SetAura
     data: 
@@ -85753,6 +85760,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.9166666
     functionName: SetEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.3833334
+    functionName: SetCamNormal
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

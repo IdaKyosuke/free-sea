@@ -44,11 +44,11 @@ public class Status : ScriptableObject
 		m_status[(int)StatusType.SkillPoint] = m_skillPoint;
 
 		// 初期ステータスを配列化
-		m_firstStatus[(int)StatusType.Hp] = m_hp;
-		m_firstStatus[(int)StatusType.Atk] = m_atk;
-		m_firstStatus[(int)StatusType.Def] = m_def;
-		m_firstStatus[(int)StatusType.Spd] = m_spd;
-		m_firstStatus[(int)StatusType.SkillPoint] = m_skillPoint;
+		m_firstStatus[(int)StatusType.Hp] = 1;
+		m_firstStatus[(int)StatusType.Atk] = 1;
+		m_firstStatus[(int)StatusType.Def] = 1;
+		m_firstStatus[(int)StatusType.Spd] = 1;
+		m_firstStatus[(int)StatusType.SkillPoint] = 0;
 	}
 
 	public void LvUp() { m_lv++; }

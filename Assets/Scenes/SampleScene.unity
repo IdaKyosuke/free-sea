@@ -8582,6 +8582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bcd413667e68645ab130287d33f148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerCam: {fileID: 2071871313}
   m_player: {fileID: 637643819}
   m_weaponCol: {fileID: 1894953221}
   m_trail: {fileID: 613877691}
@@ -8853,11 +8854,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 7
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -13849,10 +13850,12 @@ MonoBehaviour:
   m_pivot: {fileID: 1689716290}
   m_camRotSpeedX: 0.1
   m_camRange: 1
+  m_camSpecialRange: 4
   m_minCamHeight: 0.2
   m_camDiffZ: -4
   m_camDiffY: 2.2
   m_camDist: 4
+  m_camChangeTime: 1.5
   m_pauseManager: {fileID: 1677528404}
 --- !u!1 &2071903045
 GameObject:
@@ -14152,7 +14155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2124077424
 MonoBehaviour:
   m_ObjectHideFlags: 0

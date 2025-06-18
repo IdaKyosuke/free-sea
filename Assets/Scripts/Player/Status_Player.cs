@@ -26,7 +26,8 @@ public class Status_Player : MonoBehaviour
 	private float[] m_statusValue = new float[(int)Status.StatusType.Length - 1];   // ステータスの実数値の配列
 
 	private float m_hp; // 現在の体力
-	private bool m_isDeath;	// 死んだか
+	private bool m_isDeath; // 死んだか
+	private bool m_isInvincible;	// 現在無敵時間か
 
 	// Start is called before the first frame update
 	void Start()
@@ -124,11 +125,15 @@ public class Status_Player : MonoBehaviour
 	// ダメージ処理
 	public void GetHit(float damage)
 	{
-		m_hp -= damage;
-		if(m_hp <= 0)
+		// 無敵時間中は処理を飛ばす
+		//if (!m_isInvincible)
 		{
-			// 最低値を0にする
-			m_hp = 0;
+			m_hp -= damage;
+			if (m_hp <= 0)
+			{
+				// 最低値を0にする
+				m_hp = 0;
+			}
 		}
 	}
 
@@ -196,6 +201,12 @@ public class Status_Player : MonoBehaviour
 	public bool IsDeath()
 	{
 		return m_isDeath;
+	}
+
+	// 無敵時間かどうか判定する
+	public void SetInvincible(bool flg)
+	{
+		m_isInvincible = flg;
 	}
 
 	// 契約中の悪魔を変更する(upkey=>1, downkey=>-1)
