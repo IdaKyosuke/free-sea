@@ -2306,8 +2306,8 @@ GameObject:
   - component: {fileID: 8271296566638407325}
   - component: {fileID: 7270972386805421348}
   - component: {fileID: 3301756764099055593}
-  - component: {fileID: 5986110498029071057}
   - component: {fileID: 89613785639008714}
+  - component: {fileID: 2748893294160701948}
   m_Layer: 7
   m_Name: Base mesh MonsterMutant7 skin2
   m_TagString: Untagged
@@ -2370,28 +2370,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_changeAmount: 0.5
   m_moveTime: 1
---- !u!114 &5986110498029071057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3536575118158824873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63632beca300b984593eca2238476609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_wingAnim: {fileID: 6882339623970305852}
-  m_magicCollider: {fileID: 3880445536125071850}
-  m_magicCircle: {fileID: 649482745659339993, guid: 2b0f181c0eb420f479d8115567fb9d9a,
-    type: 3}
-  m_probability: 10
-  m_magicRecastTime: 10
-  m_magicPoints:
-  - {fileID: 5930489975095775086}
-  - {fileID: 3858711219526516360}
-  m_collider: {fileID: 7352229118722299815}
 --- !u!135 &89613785639008714
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2413,6 +2391,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2748893294160701948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536575118158824873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c8491a956c8c240935db48f7e0913e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_wingAnim: {fileID: 6882339623970305852}
+  m_magicCollider: {fileID: 3880445536125071850}
+  m_magicCircle: {fileID: 649482745659339993, guid: 2b0f181c0eb420f479d8115567fb9d9a,
+    type: 3}
+  m_probability: 10
+  m_magicRecastTime: 10
+  m_magicPoints:
+  - {fileID: 5930489975095775086}
+  - {fileID: 3858711219526516360}
+  m_collider: {fileID: 7352229118722299815}
 --- !u!1 &3538027496166535269
 GameObject:
   m_ObjectHideFlags: 0

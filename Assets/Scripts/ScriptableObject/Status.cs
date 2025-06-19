@@ -104,4 +104,15 @@ public class Status : ScriptableObject
 	{
 		return m_status[(int)type];
 	}
+
+	// ゲーム終了時に状態を保存する
+	public void Save()
+	{
+		// テスト用にステータスを反映させる
+		m_hp = m_status[(int)StatusType.Hp];
+		m_atk = m_status[(int)StatusType.Atk];
+		m_def = m_status[(int)StatusType.Def];
+		m_spd = m_status[(int)StatusType.Spd];
+		m_skillPoint = m_status[(int)StatusType.SkillPoint];
+	}
 }

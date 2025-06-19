@@ -15,6 +15,7 @@ TagManager:
   - Weapon_Enemy
   - Attack_Special
   - Enemy_Weapon
+  - pauseManager
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +18,8 @@ public class Move_Enemy : MonoBehaviour
 	[SerializeField] int m_damage;	// プレイヤー攻撃時に与えるダメージ
 
 	private bool m_isDeath;
+	[SerializeField] bool m_haveManyAttacks;
+	
 
 	// 移動用
 	private NavMeshAgent m_agent;
@@ -47,7 +50,7 @@ public class Move_Enemy : MonoBehaviour
 	{
 		if (m_isDeath)
 		{
-			if(m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().FinishDeathAnim())
+			if(m_enemyAnimator.GetComponent<Animation_Enemy>().FinishDeathAnim())
 			{
 				// 死亡アニメーションが終了したら
 				// 消える前にエフェクトを出す
@@ -58,7 +61,7 @@ public class Move_Enemy : MonoBehaviour
 			return;
 		}
 
-		if (m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().CanMove())
+		if (m_enemyAnimator.GetComponent<Animation_Enemy>().CanMove())
 		{
 			m_agent.isStopped = false;
 			m_agent.SetDestination(m_playerTransform.position);
@@ -90,14 +93,14 @@ public class Move_Enemy : MonoBehaviour
 			if(m_hp > 0)
 			{
 				// まだ死亡していなかったら攻撃を受けるアニメーションを実行する
-				m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().GetHit();
+				m_enemyAnimator.GetComponent<Animation_Enemy>().GetHit();
 			}
 			else
 			{
 				// 死亡したら
 				m_isDeath = true;
 				// 死亡アニメーション
-				m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().IsDeath();
+				m_enemyAnimator.GetComponent<Animation_Enemy>().IsDeath();
 				// プレイヤーの経験値を追加
 				m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
 			}
@@ -111,7 +114,7 @@ public class Move_Enemy : MonoBehaviour
 			m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
 
 			// 死亡アニメーション
-			m_enemyAnimator.GetComponent<Animation_Enemy_Angel>().IsDeath();
+			m_enemyAnimator.GetComponent<Animation_Enemy>().IsDeath();
 			m_isDeath = true;
 		}
 	}

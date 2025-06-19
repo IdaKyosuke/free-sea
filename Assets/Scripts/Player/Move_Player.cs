@@ -46,6 +46,10 @@ public class Move_Player : MonoBehaviour
 		{
 			m_status = GameObject.FindWithTag("playerStatus");
 		}
+		if(!m_cam)
+		{
+			m_cam = GameObject.FindWithTag("playerCam").GetComponent<Camera>();
+		}
 	}
 
     // Update is called once per frame

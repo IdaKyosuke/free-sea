@@ -60,6 +60,14 @@ public class Animation_Player : MonoBehaviour
 		{
 			m_zoneManager = GameObject.FindWithTag("zoneGaugeManager");
 		}
+		if(!m_pauseManager)
+		{
+			m_pauseManager = GameObject.FindWithTag("pauseManager");
+		}
+		if(!m_playerCam)
+		{
+			m_playerCam  = GameObject.FindWithTag("playerCam");
+		}
 
 		// TrailRenderer‚ð–³Œø‚É‚·‚é
 		m_trail.GetComponent<TrailRenderer>().emitting = false;

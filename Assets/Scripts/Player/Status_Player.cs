@@ -126,7 +126,7 @@ public class Status_Player : MonoBehaviour
 	public void GetHit(float damage)
 	{
 		// 無敵時間中は処理を飛ばす
-		//if (!m_isInvincible)
+		if (!m_isInvincible)
 		{
 			m_hp -= damage;
 			if (m_hp <= 0)
@@ -247,5 +247,12 @@ public class Status_Player : MonoBehaviour
 		m_isDemonChange = false;
 
 		yield return null;
+	}
+
+	// ゲーム終了時に走る関数
+	private void OnApplicationQuit()
+	{
+		// テストで値を反映させる
+		m_status.Save();
 	}
 }

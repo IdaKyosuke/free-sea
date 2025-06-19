@@ -24,19 +24,28 @@ public class PauseSceneManager : MonoBehaviour
 		{
 			m_isPause = !m_isPause;
 		}
-
+		/*
 		if (m_isPause)
 		{
 			// Timeが関わる処理 && fixedUpdate を止める
 			Time.timeScale = 0f;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 			m_pauseScene.SetActive(true);
 		}
 		else
 		{
 			// Timeが関わる処理 && fixedUpdateを再開
 			Time.timeScale = 1.0f;
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
 			m_pauseScene.SetActive(false);
 		}
+		*/
+		Time.timeScale = m_isPause ? 0f : 1.0f;
+		Cursor.lockState = m_isPause ? CursorLockMode.None : CursorLockMode.Locked;
+		Cursor.visible = m_isPause;
+		m_pauseScene.SetActive(m_isPause);
 	}
 
 	public bool IsPause()
@@ -48,5 +57,11 @@ public class PauseSceneManager : MonoBehaviour
 	public void RestartGame()
 	{
 		m_isPause = false;
+	}
+
+	// ポーズ画面のキーバインドを受け渡す
+	public string GetPauseKey()
+	{
+		return m_pauseKey;
 	}
 }
