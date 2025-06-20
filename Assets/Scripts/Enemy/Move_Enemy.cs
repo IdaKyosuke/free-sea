@@ -7,19 +7,20 @@ using UnityEngine.AI;
 
 public class Move_Enemy : MonoBehaviour
 {
+	// 敵のステータス情報のScriptableObject
+	[SerializeField] Enemy_Status m_status;
+
 	[SerializeField] GameObject m_comboManager; // コンボ加算用
 	[SerializeField] GameObject m_hitEffect;    // ヒットエフェクト
 	[SerializeField] GameObject m_deathEffect;	// 死亡して消える瞬間に出すエフェクト
 	[SerializeField] GameObject m_playerStatus; // プレイヤーのステータス管理用オブジェクト
 	[SerializeField] GameObject m_enemyAnimator;	// 敵のアニメーションを管理するオブジェクト
-	[SerializeField] int m_exp = 5;	// 得られる経験値
-	[SerializeField] int m_hp = 1;  // 体力
 	[SerializeField] float m_deathEffectHeightDiff = 0.5f;  // 死亡時のエフェクトの高さ差分
-	[SerializeField] int m_damage;	// プレイヤー攻撃時に与えるダメージ
+	private int m_exp;	// 得られる経験値
+	private int m_hp;  // 体力
+	private int m_damage;	// プレイヤー攻撃時に与えるダメージ
 
 	private bool m_isDeath;
-	[SerializeField] bool m_haveManyAttacks;
-	
 
 	// 移動用
 	private NavMeshAgent m_agent;
@@ -43,6 +44,11 @@ public class Move_Enemy : MonoBehaviour
 		m_playerTransform = GameObject.FindWithTag("Player").transform;
 
 		m_isDeath = false;
+
+		// ---- ステータスの取得 ----
+		m_hp = m_status.GetHp();
+		m_exp = m_status.GetExp();
+		m_damage = m_status.GetDamage();
 	}
 
 	// Update is called once per frame
@@ -63,13 +69,13 @@ public class Move_Enemy : MonoBehaviour
 
 		if (m_enemyAnimator.GetComponent<Animation_Enemy>().CanMove())
 		{
-			m_agent.isStopped = false;
+			m_agent.enabled = true;
 			m_agent.SetDestination(m_playerTransform.position);
 		}
 		else
 		{
 			// 攻撃中は移動できない
-			m_agent.isStopped = true;
+			m_agent.enabled = false;
 		}
 	}
 

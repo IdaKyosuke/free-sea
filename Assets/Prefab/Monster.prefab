@@ -1100,6 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb916fb90c70424fbd21237f4b9bdb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_status: {fileID: 11400000, guid: 78172fa3b7e677642909b036ebda33d9, type: 2}
   m_comboManager: {fileID: 0}
   m_hitEffect: {fileID: 5041430589206584453, guid: 2f639218d99216f48b915c49f90dad16,
     type: 3}
@@ -1107,10 +1108,7 @@ MonoBehaviour:
     type: 3}
   m_playerStatus: {fileID: 0}
   m_enemyAnimator: {fileID: 3536575118158824873}
-  m_exp: 5
-  m_hp: 10
   m_deathEffectHeightDiff: 0.5
-  m_damage: 5
   m_playerTransform: {fileID: 0}
 --- !u!136 &5567901578853817088
 CapsuleCollider:
@@ -2306,7 +2304,6 @@ GameObject:
   - component: {fileID: 8271296566638407325}
   - component: {fileID: 7270972386805421348}
   - component: {fileID: 3301756764099055593}
-  - component: {fileID: 89613785639008714}
   - component: {fileID: 2748893294160701948}
   m_Layer: 7
   m_Name: Base mesh MonsterMutant7 skin2
@@ -2333,6 +2330,7 @@ Transform:
   - {fileID: 8323414084810769034}
   - {fileID: 8685834969206015156}
   - {fileID: 6014133061805028796}
+  - {fileID: 1796480019762347667}
   m_Father: {fileID: 1116137158063540833}
   m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!95 &7270972386805421348
@@ -2370,27 +2368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_changeAmount: 0.5
   m_moveTime: 1
---- !u!135 &89613785639008714
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3536575118158824873}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2748893294160701948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2412,7 +2389,11 @@ MonoBehaviour:
   m_magicPoints:
   - {fileID: 5930489975095775086}
   - {fileID: 3858711219526516360}
+  m_canAttackCollider: {fileID: 6722010326594990708}
   m_collider: {fileID: 7352229118722299815}
+  m_haveManyAttacks: 0
+  m_attackAnimNum: 0
+  m_haveMoveAnim: 0
 --- !u!1 &3538027496166535269
 GameObject:
   m_ObjectHideFlags: 0
@@ -5373,6 +5354,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2861819753315703359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6722010326594990708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796480019762347667}
+  - component: {fileID: 6540826708195676563}
+  - component: {fileID: 9074196482374847618}
+  m_Layer: 7
+  m_Name: CanAttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796480019762347667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722010326594990708}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8271296566638407325}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6540826708195676563
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722010326594990708}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9074196482374847618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722010326594990708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bfb9b77556641e458880d222e4d5a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6856691198806854630
 GameObject:
   m_ObjectHideFlags: 0

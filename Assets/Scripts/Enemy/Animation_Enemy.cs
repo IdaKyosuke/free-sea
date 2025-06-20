@@ -16,7 +16,13 @@ public class Animation_Enemy : MonoBehaviour
 	[SerializeField] GameObject[] m_magicPoints;    // 魔法陣を生成する場所
 
 	// 攻撃用当たり判定
+	[SerializeField] GameObject m_canAttackCollider;	// 攻撃できる範囲かどうか判定する
 	[SerializeField] BoxCollider m_collider;
+	[SerializeField] bool m_haveManyAttacks;    // 攻撃アニメーションが複数あるか
+	[SerializeField] int m_attackAnimNum;		// 攻撃アニメーションが複数ある時、いくつあるか
+
+	[SerializeField] bool m_haveMoveAnim;       // 移動アニメーションを持っているか
+	private Vector3 m_pastPos;					// 移動アニメーション反映用
 
 	private Animator m_anim;
 	private float m_duration;
@@ -28,6 +34,7 @@ public class Animation_Enemy : MonoBehaviour
 	private bool m_isDeath;
 	private bool m_attackMagic; // 魔法の攻撃を行った or 再抽選までのリキャスト時間かどうか
 	private float m_magicDuration;  // 魔法攻撃のリキャスト時間計算用
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -42,6 +49,7 @@ public class Animation_Enemy : MonoBehaviour
 		m_attackMagic = false;
 		// 攻撃判定を消す
 		m_collider.enabled = false;
+		m_pastPos = transform.position;
 
 		// AnimatorからObservableStateMachineTriggerの参照を取得
 		ObservableStateMachineTrigger trigger =
@@ -53,16 +61,19 @@ public class Animation_Enemy : MonoBehaviour
 			.Subscribe(onStateInfo =>
 			{
 				AnimatorStateInfo info = onStateInfo.StateInfo;
-				if (info.IsName("Base Layer.attack"))
+				if(!m_haveManyAttacks)
 				{
-					// 攻撃中は移動できないようにする
-					m_canMove = false;
+					if (info.IsName("Base Layer.attack"))
+					{
+						// 攻撃中は移動できないようにする
+						m_canMove = false;
+					}
 				}
 
 				// 死亡アニメーション開始時
 				if (info.IsName("Base Layer.Death"))
 				{
-					if(m_wingAnim)
+					if (m_wingAnim)
 					{
 						m_wingAnim.GetComponent<Animation_AngelWing>().IsDeath();
 						GetComponent<FlyHeight_Anim>().IsDeath();
@@ -77,10 +88,13 @@ public class Animation_Enemy : MonoBehaviour
 			.Subscribe(onStateInfo =>
 			{
 				AnimatorStateInfo info = onStateInfo.StateInfo;
-				if (info.IsName("Base Layer.attack"))
+				if (!m_haveManyAttacks)
 				{
-					// 攻撃終了後に動けるようにする
-					m_canMove = true;
+					if (info.IsName("Base Layer.attack"))
+					{
+						// 攻撃中は移動できないようにする
+						m_canMove = true;
+					}
 				}
 
 				// ヒットアニメーション
@@ -101,22 +115,27 @@ public class Animation_Enemy : MonoBehaviour
 		// 攻撃のリキャスト時間を計算する
 		if (m_isAttacked)
 		{
-			m_duration += Time.deltaTime;
-
-			if (m_duration >= 3.0f)
-			{
-				m_duration = 0;
-				m_isAttacked = false;
-
-				if (m_attackMagic)
-				{
-					// 魔法攻撃で移動が制限されているとき、動けるようにする
-					m_canMove = true;
-				}
-			}
+			CountRecastAttack();
 		}
 
+		if(m_haveMoveAnim)
+		{
+			MoveAnim();
+		}
+
+		// 魔法攻撃（遠距離攻撃）を行うか判定
 		AttackMagic();
+
+		// 近接攻撃を行うか
+		MeleeAttack();
+	}
+
+	// 移動アニメーションを持っているとき反映する
+	private void MoveAnim()
+	{
+		m_anim.SetBool("walk", transform.position != m_pastPos);
+		// 1フレーム前の位置を更新
+		m_pastPos = transform.position;
 	}
 
 	private void AttackMagic()
@@ -155,10 +174,12 @@ public class Animation_Enemy : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerStay(Collider other)
+	private void MeleeAttack()
 	{
-		if (other.gameObject.CompareTag("Player"))
+		// コライダーの範囲内にプレイヤーがいるなら
+		if (m_canAttackCollider.GetComponent<CanAttackArea>().GetCanAttack())
 		{
+			// 近づきすぎないように調整
 			m_canMove = false;
 
 			// 死亡している || 攻撃を受けている時は何もしない
@@ -167,17 +188,44 @@ public class Animation_Enemy : MonoBehaviour
 			// 攻撃を受けていない && 攻撃のリキャスト時間でない
 			if (!m_isAttacked)
 			{
-				m_anim.SetTrigger("attack");
+				if (!m_haveManyAttacks)
+				{
+					// 攻撃アニメーションが1つしかないとき
+					m_anim.SetTrigger("attack");
+				}
+				else
+				{
+					// 攻撃アニメーションが複数ある時
+					int num = UnityEngine.Random.Range(0, m_attackAnimNum) + 1;
+					m_anim.SetTrigger("attack");
+					m_anim.SetTrigger("attack" + num);
+				}
+
 				m_isAttacked = true;
 			}
 		}
+		else
+		{
+			// プレイヤーに近づく
+			m_canMove = true;
+		}
 	}
 
-	private void OnTriggerExit(Collider other)
+	// 攻撃のリキャスト時間を計算する
+	private void CountRecastAttack()
 	{
-		if (other.gameObject.CompareTag("Player"))
+		m_duration += Time.deltaTime;
+
+		if (m_duration >= 3.0f)
 		{
-			m_canMove = true;
+			m_duration = 0;
+			m_isAttacked = false;
+
+			if (m_attackMagic)
+			{
+				// 魔法攻撃で移動が制限されているとき、動けるようにする
+				m_canMove = true;
+			}
 		}
 	}
 
@@ -185,6 +233,16 @@ public class Animation_Enemy : MonoBehaviour
 	public bool CanMove()
 	{
 		return m_canMove;
+	}
+
+	// アニメーションイベントで動けるかどうかを変更する
+	public void SetCanMove()
+	{
+		m_canMove = true;
+	}
+	public void SetCantMove()
+	{
+		m_canMove = false;
 	}
 
 	// 死亡アニメーションを実行する && 死亡したフラグを立てる
@@ -223,5 +281,15 @@ public class Animation_Enemy : MonoBehaviour
 	public void EnactiveCol()
 	{
 		m_collider.enabled = false;
+	}
+
+	// ApplyRootMotionの管理用
+	public void ActiveApplyRootMotion()
+	{
+		m_anim.applyRootMotion = true;
+	}
+	public void InActiveApplyRootMotion()
+	{
+		m_anim.applyRootMotion = false;
 	}
 }
