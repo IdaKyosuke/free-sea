@@ -115,6 +115,7 @@ public class Move_Enemy : MonoBehaviour
 		// 必殺技を受けたとき
 		if(other.gameObject.CompareTag("Attack_Special"))
 		{
+			Debug.Log(0);
 			m_hp = 0;
 			// プレイヤーの経験値を追加
 			m_playerStatus.GetComponent<Status_Player>().AddExp(m_exp);
