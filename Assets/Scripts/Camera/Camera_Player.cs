@@ -70,7 +70,8 @@ public class Camera_Player : MonoBehaviour
 
 		m_diff = m_currentPos - m_pastPos;
 		// カメラをプレイヤーの移動差分だけ動かす
-		transform.position = Vector3.Lerp(transform.position, transform.position + m_diff, 1.0f);
+		//transform.position = Vector3.Lerp(transform.position, transform.position + m_diff, 1.0f);
+		transform.position += m_diff;
 		m_pastPos = m_currentPos;
 
 		// カメラを横に回転させる

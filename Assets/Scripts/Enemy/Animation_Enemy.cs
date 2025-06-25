@@ -203,6 +203,7 @@ public class Animation_Enemy : MonoBehaviour
 
 				m_isAttacked = true;
 			}
+
 		}
 		else
 		{
@@ -291,5 +292,11 @@ public class Animation_Enemy : MonoBehaviour
 	public void InActiveApplyRootMotion()
 	{
 		m_anim.applyRootMotion = false;
+	}
+
+	// UŒ‚ƒ‚[ƒVƒ‡ƒ“’†‚©”»’è‚·‚é
+	public bool IsAttacked()
+	{
+		return m_isAttacked;
 	}
 }

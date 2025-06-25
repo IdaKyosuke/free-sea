@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx.Triggers;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class ForMinotaurEffect : MonoBehaviour
 {
@@ -11,16 +13,34 @@ public class ForMinotaurEffect : MonoBehaviour
 	[SerializeField] GameObject m_impact;
 	[SerializeField] GameObject m_slash;
 
+	// aŒ‚‚ÌŠp“x
+	[SerializeField] GameObject m_apperPoint;
+	[SerializeField] GameObject m_normalPoint;
+
+	private float m_angleZ = 98.0f;
+
 	// ’@‚«‚Â‚¯‚ÌÕŒ‚
 	public void InstantiateImpact()
 	{
 		Instantiate(m_impact, m_weapon.transform.position, m_weapon.transform.rotation);
 	}
 
-	// aŒ‚‚ğ”ò‚Î‚·
+	// ----- aŒ‚‚ğ”ò‚Î‚· -----
+	// •Ší‚ğU‚èã‚°‚éƒ‚[ƒVƒ‡ƒ“‚É•t‚¯‚é
+	public void InstantiateSlash_Upper()
+	{
+		Quaternion rot = Quaternion.identity;
+		rot.z = m_angleZ;
+		rot.y = transform.eulerAngles.y;
+		rot.x = transform.eulerAngles.x;
+		Instantiate(m_slash, m_apperPoint.transform.position, rot);
+		Debug.Log(rot);
+	}
+	// …•½‚É”ò‚ÔaŒ‚
 	public void InstantiateSlash()
 	{
-		Instantiate(m_slash, m_weapon.transform.position, m_weapon.transform.rotation);
-		Debug.Log(0);
+		Quaternion rot = Quaternion.identity;
+		rot.y = transform.eulerAngles.y;
+		Instantiate(m_slash, m_apperPoint.transform.position, rot);
 	}
 }

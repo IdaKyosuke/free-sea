@@ -77,6 +77,12 @@ public class Move_Enemy : MonoBehaviour
 			// UŒ‚’†‚ÍˆÚ“®‚Å‚«‚È‚¢
 			m_agent.enabled = false;
 		}
+
+		if(m_enemyAnimator.GetComponent<Animation_Enemy>().IsAttacked())
+		{
+			// UŒ‚’†‚Í‘Ì‚ÌŒü‚«‚ğ“G‚É‡‚í‚¹‚é
+			RotateForPlayer();
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)
