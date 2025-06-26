@@ -50,7 +50,8 @@ public class Camera_Player : MonoBehaviour
 
 		// カメラの開始時の座標を設定
 		Vector3 playerPos = m_player.transform.position;
-		transform.position = new Vector3(playerPos.x, playerPos.y + m_camDiffY, playerPos.z + m_camDiffZ);
+		Vector3 dir = playerPos - transform.position;
+		transform.position = playerPos - dir * m_camDist;
 
 		m_camDir = Vector3.Normalize(m_pivot.transform.position - transform.position);
 
@@ -89,8 +90,8 @@ public class Camera_Player : MonoBehaviour
 		Vector3 pos = new Vector3(transform.position.x, transform.position.y + Input.GetAxisRaw("Mouse Y") * m_camRotSpeedX * -1, transform.position.z);
 
 		// カメラの高さを制限する
-		if (pos.y >= m_maxCamHeight) pos = new Vector3(pos.x, m_maxCamHeight, pos.z);
-		if (pos.y <= m_minCamHeight) pos = new Vector3(pos.x, m_minCamHeight, pos.z);
+		if (pos.y >= m_currentPos.y + m_maxCamHeight) pos = new Vector3(pos.x, m_currentPos.y + m_maxCamHeight, pos.z);
+		if (pos.y <= m_currentPos.y + m_minCamHeight) pos = new Vector3(pos.x, m_currentPos.y + m_minCamHeight, pos.z);
 
 		m_camDir = Vector3.Normalize(m_pivot.transform.position - pos);
 

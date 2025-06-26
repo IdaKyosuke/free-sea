@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Move_Player : MonoBehaviour
@@ -10,6 +11,9 @@ public class Move_Player : MonoBehaviour
 	[SerializeField] float m_runSpeed = 4.0f;
 
 	private Rigidbody m_rb;
+
+	private CharacterController m_charaCon;
+	[SerializeField] float m_gravity = 20.0f;
 
 	// キーの入力を取得
 	private float m_inputX;
@@ -28,12 +32,15 @@ public class Move_Player : MonoBehaviour
 	[SerializeField] GameObject m_status;
 
 	private bool m_stopMove;    // 移動できるか取得する用
-	private bool m_isPlayDeathAnim;	// 死亡アニメーションを1回しか呼ばない用
+	private bool m_isPlayDeathAnim; // 死亡アニメーションを1回しか呼ばない用
+
+	private float m_rayLength = 1.0f;
 
 	// Start is called before the first frame update
 	void Start()
     {
 		m_rb = GetComponent<Rigidbody>();
+		m_charaCon = GetComponent<CharacterController>();
 		m_inputX = 0;
 		m_inputZ = 0;
 		m_moveDirection = Vector3.zero;
@@ -126,9 +133,21 @@ public class Move_Player : MonoBehaviour
 					spdBuff *= 0.6f;
 					break;
 			}
-
+			/*
+			if(m_charaCon.isGrounded)
+			{
+				m_moveDirection.y = 0;
+			}
+			else
+			{
+				m_moveDirection.y -= m_gravity * Time.deltaTime;
+			}
+			*/
 			// rigidBodyを使った移動
 			m_rb.velocity = m_moveDirection * (Input.GetKey("left shift") ? m_runSpeed * spdBuff: m_walkSpeed) + new Vector3(0, m_rb.velocity.y, 0);
+			//m_charaCon.Move(m_moveDirection * Time.deltaTime * (m_isRun ? m_runSpeed * spdBuff : m_walkSpeed));
+
+			//CheckGround();
 
 			// プレイヤーの回転
 			transform.rotation = Quaternion.LookRotation(m_moveDirection);
@@ -179,5 +198,19 @@ public class Move_Player : MonoBehaviour
 	public Vector3 GetMoveDir()
 	{
 		return m_moveDirection;
+	}
+
+	// 坂道を登れるようにする
+	private void CheckGround()
+	{
+		RaycastHit hit;
+
+		Vector3 start = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+		Vector3 dir = transform.position - start;
+
+		if(Physics.Raycast(start, dir, out hit, m_rayLength))
+		{
+			transform.position = transform.position + new Vector3(0, hit.point.y, 0);
+		}
 	}
 }
