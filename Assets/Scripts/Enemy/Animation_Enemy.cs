@@ -35,6 +35,7 @@ public class Animation_Enemy : MonoBehaviour
 	private bool m_attackMagic; // 魔法の攻撃を行った or 再抽選までのリキャスト時間かどうか
 	private float m_magicDuration;  // 魔法攻撃のリキャスト時間計算用
 
+	private bool m_isCombat;	// 接敵しているか
 
 	// Start is called before the first frame update
 	void Start()
@@ -50,6 +51,8 @@ public class Animation_Enemy : MonoBehaviour
 		// 攻撃判定を消す
 		m_collider.enabled = false;
 		m_pastPos = transform.position;
+		m_isCombat = false;
+
 
 		// AnimatorからObservableStateMachineTriggerの参照を取得
 		ObservableStateMachineTrigger trigger =
@@ -122,6 +125,8 @@ public class Animation_Enemy : MonoBehaviour
 		{
 			MoveAnim();
 		}
+
+		if (!m_isCombat) return;
 
 		// 魔法攻撃（遠距離攻撃）を行うか判定
 		AttackMagic();
@@ -298,5 +303,11 @@ public class Animation_Enemy : MonoBehaviour
 	public bool IsAttacked()
 	{
 		return m_isAttacked;
+	}
+
+	// プレイヤーと接敵状態にする
+	public void SetCombat()
+	{
+		m_isCombat = true;
 	}
 }

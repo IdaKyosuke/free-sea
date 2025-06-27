@@ -7,13 +7,15 @@ public class Slash : MonoBehaviour
 	[SerializeField] float m_speed; // 移動するエフェクトの速度
 	[SerializeField] float m_time;  // 消えるまでの時間
 	private Rigidbody m_rb;
-	private float m_duration;	// 経過時間計測用
+	private float m_duration;   // 経過時間計測用
 
     // Start is called before the first frame update
     void Start()
     {
         m_rb = GetComponent<Rigidbody>();
 		m_duration = 0;
+		Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
+		this.transform.LookAt(playerPos);
 	}
 
     // Update is called once per frame

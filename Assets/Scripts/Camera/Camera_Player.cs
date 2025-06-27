@@ -13,7 +13,6 @@ public class Camera_Player : MonoBehaviour
 	private float m_maxCamHeight;   // カメラの高さの最大値
 	[SerializeField] float m_minCamHeight = 0.2f;   // カメラの高さの最小値
 	[SerializeField] float m_camDiffZ = -4.0f;  // ゲーム開始時のプレイヤーのZ座標とカメラのZ座標の差分
-	[SerializeField] float m_camDiffY = 2.2f;   // ゲーム開始時のプレイヤーのY座標とカメラのY座標の差分
 
 	// カメラの位置
 	private Vector3 m_currentPos;

@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62eafcde0a481f04baf85ef07740292f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 4
+  m_speed: 12
   m_time: 2
 --- !u!54 &5659741659967047549
 Rigidbody:

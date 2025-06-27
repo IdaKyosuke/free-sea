@@ -39,8 +39,6 @@ public class ForMinotaurEffect : MonoBehaviour
 	// …•½‚É”ò‚ÔaŒ‚
 	public void InstantiateSlash()
 	{
-		Quaternion rot = Quaternion.identity;
-		rot.y = transform.eulerAngles.y;
-		Instantiate(m_slash, m_apperPoint.transform.position, rot);
+		Instantiate(m_slash, m_apperPoint.transform.position, m_apperPoint.transform.rotation);
 	}
 }

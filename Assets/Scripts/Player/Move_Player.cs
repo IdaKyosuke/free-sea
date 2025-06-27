@@ -10,16 +10,14 @@ public class Move_Player : MonoBehaviour
 	[SerializeField] float m_walkSpeed = 4.0f;
 	[SerializeField] float m_runSpeed = 4.0f;
 
-	private Rigidbody m_rb;
-
 	private CharacterController m_charaCon;
-	[SerializeField] float m_gravity = 20.0f;
 
 	// キーの入力を取得
 	private float m_inputX;
 	private float m_inputZ;
 	private Vector3 m_moveDirection;
 	private bool m_isRun;
+	private Vector3 m_moveVelocity;
 
 	// カメラ
 	[SerializeField] Camera m_cam;
@@ -34,12 +32,12 @@ public class Move_Player : MonoBehaviour
 	private bool m_stopMove;    // 移動できるか取得する用
 	private bool m_isPlayDeathAnim; // 死亡アニメーションを1回しか呼ばない用
 
-	private float m_rayLength = 1.0f;
+	// レベルアップ時のエフェクト
+	[SerializeField] GameObject m_effect;
 
 	// Start is called before the first frame update
 	void Start()
     {
-		m_rb = GetComponent<Rigidbody>();
 		m_charaCon = GetComponent<CharacterController>();
 		m_inputX = 0;
 		m_inputZ = 0;
@@ -49,6 +47,7 @@ public class Move_Player : MonoBehaviour
 		m_camRight = Vector3.zero;
 		m_stopMove = m_model.GetComponent<Animation_Player>().GetMoveFlg();
 		m_isPlayDeathAnim = false;
+		m_moveVelocity = Vector3.zero ;
 		if (!m_status)
 		{
 			m_status = GameObject.FindWithTag("playerStatus");
@@ -88,8 +87,8 @@ public class Move_Player : MonoBehaviour
 		if(!m_stopMove)
 		{
 			// キーの入力
-			m_inputX = Input.GetAxis("Horizontal");
-			m_inputZ = Input.GetAxis("Vertical");
+			m_inputX = Input.GetAxisRaw("Horizontal");
+			m_inputZ = Input.GetAxisRaw("Vertical");
 
 			// カメラの向き
 			m_camForward = Vector3.Scale(m_cam.transform.forward, new Vector3(1, 0, 1)).normalized;
@@ -133,24 +132,26 @@ public class Move_Player : MonoBehaviour
 					spdBuff *= 0.6f;
 					break;
 			}
-			/*
-			if(m_charaCon.isGrounded)
-			{
-				m_moveDirection.y = 0;
-			}
-			else
-			{
-				m_moveDirection.y -= m_gravity * Time.deltaTime;
-			}
-			*/
-			// rigidBodyを使った移動
-			m_rb.velocity = m_moveDirection * (Input.GetKey("left shift") ? m_runSpeed * spdBuff: m_walkSpeed) + new Vector3(0, m_rb.velocity.y, 0);
-			//m_charaCon.Move(m_moveDirection * Time.deltaTime * (m_isRun ? m_runSpeed * spdBuff : m_walkSpeed));
-
-			//CheckGround();
+			
+			// キャラクターコントローラーを使った移動
+			m_charaCon.Move(m_camForward * (Input.GetKey("left shift") ? m_runSpeed * spdBuff : m_walkSpeed) * m_inputZ * Time.deltaTime);
+			m_charaCon.Move(m_camRight * (Input.GetKey("left shift") ? m_runSpeed * spdBuff : m_walkSpeed) * m_inputX * Time.deltaTime);
 
 			// プレイヤーの回転
 			transform.rotation = Quaternion.LookRotation(m_moveDirection);
+
+			// 重力
+			if (!m_charaCon.isGrounded)
+			{
+				m_moveVelocity.y += Physics.gravity.y * Time.deltaTime;
+			}
+			else
+			{
+				m_moveVelocity.y = 0;
+			}
+			m_charaCon.Move(m_moveVelocity * Time.deltaTime);
+
+			//CheckGround();
 		}
 		else
 		{
@@ -200,17 +201,10 @@ public class Move_Player : MonoBehaviour
 		return m_moveDirection;
 	}
 
-	// 坂道を登れるようにする
-	private void CheckGround()
+	// レベルアップ時のエフェクトを出す
+	public void ActiveLevelUpEffect()
 	{
-		RaycastHit hit;
-
-		Vector3 start = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-		Vector3 dir = transform.position - start;
-
-		if(Physics.Raycast(start, dir, out hit, m_rayLength))
-		{
-			transform.position = transform.position + new Vector3(0, hit.point.y, 0);
-		}
+		Instantiate(m_effect, this.transform.position, Quaternion.identity);
+		Debug.Log("levelup!");
 	}
 }

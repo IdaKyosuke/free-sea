@@ -22,9 +22,14 @@ public class Move_Enemy : MonoBehaviour
 
 	private bool m_isDeath;
 
+	private AudioSource m_seGetHit;	// 攻撃を受けるときのSE
+
 	// 移動用
 	private NavMeshAgent m_agent;
 	[SerializeField] Transform m_playerTransform;
+
+	// プレイヤーに向かって移動・攻撃を始めるフラグ
+	private bool m_isCombat;
 
 	// Start is called before the first frame update
 	void Start()
@@ -39,11 +44,14 @@ public class Move_Enemy : MonoBehaviour
 			m_playerStatus = GameObject.FindWithTag("playerStatus");
 		}
 
+		m_seGetHit = GameObject.FindWithTag("se_enemyGetHit").GetComponent<AudioSource>();
+
 		m_agent = GetComponent<NavMeshAgent>();
 		// プレイヤーのtransform
 		m_playerTransform = GameObject.FindWithTag("Player").transform;
 
 		m_isDeath = false;
+		m_isCombat = false;
 
 		// ---- ステータスの取得 ----
 		m_hp = m_status.GetHp();
@@ -66,6 +74,8 @@ public class Move_Enemy : MonoBehaviour
 			}
 			return;
 		}
+
+		if (!m_isCombat) return;
 
 		if (m_enemyAnimator.GetComponent<Animation_Enemy>().CanMove())
 		{
@@ -101,6 +111,8 @@ public class Move_Enemy : MonoBehaviour
 
 			// ダメージを受ける
 			m_hp--;
+			// se再生
+			m_seGetHit.Play();
 
 			if(m_hp > 0)
 			{
@@ -146,5 +158,24 @@ public class Move_Enemy : MonoBehaviour
 	public int Damage()
 	{
 		return m_damage;
+	}
+
+	// 接敵フラグ
+	public void Combat()
+	{
+		m_isCombat = true;
+		GetComponent<Animation_Enemy>().SetCombat();
+	}
+
+	// 自分のステータス（初期値）を渡す
+	public Enemy_Status GetStatus()
+	{
+		return m_status;
+	}
+
+	// 自分の現在のHPを渡す
+	public int GetCurrentHp()
+	{
+		return m_hp;
 	}
 }

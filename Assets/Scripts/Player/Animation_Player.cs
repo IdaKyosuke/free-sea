@@ -28,6 +28,9 @@ public class Animation_Player : MonoBehaviour
 	const int AttackAnimNum = 3;
 	private bool[] m_attackAnimFlg = new bool[AttackAnimNum];
 
+	// 攻撃アニメーション用SE
+	[SerializeField] AudioSource m_swingSword;
+
 	// 魔法攻撃用のオブジェクト
 	[SerializeField] GameObject m_magic;
 	[SerializeField] GameObject m_magicPoint;
@@ -35,6 +38,10 @@ public class Animation_Player : MonoBehaviour
 	// 魔法攻撃（必殺技）用のオーラ
 	[SerializeField] GameObject m_aura;
 	[SerializeField] GameObject m_lightning;
+
+	// 必殺技で使うSE
+	[SerializeField] AudioSource m_seAura;
+	[SerializeField] AudioSource m_seLightning;
 
 	private bool m_canSpecialAttack;    // 必殺技を撃てるかどうか
 	private bool m_isAttackSpecial;     // 必殺技を発動中か
@@ -92,14 +99,17 @@ public class Animation_Player : MonoBehaviour
 				if (info.IsName("Base Layer.Attack1"))
 				{
 					m_attackAnimFlg [0] = true;
+					m_swingSword.Play();
 				}
 				if (info.IsName("Base Layer.Attack2"))
 				{
 					m_attackAnimFlg[1] = true;
+					m_swingSword.Play();
 				}
 				if (info.IsName("Base Layer.Attack3"))
 				{
 					m_attackAnimFlg[2] = true;
+					m_swingSword.Play();
 				}
 
 				// ローリング時に無敵判定を用意する
@@ -339,11 +349,13 @@ public class Animation_Player : MonoBehaviour
 	{
 		// オーラをまとわせる
 		Instantiate(m_aura, m_player.transform.position, Quaternion.identity);
+		m_seAura.Play();
 	}
 	public void SetEffect()
 	{
 		// 攻撃エフェクトを発生させる
 		Instantiate(m_lightning, m_player.transform.position, Quaternion.identity);
+		m_seLightning.Play();
 	}
 
 	// カメラの距離を必殺技用にする

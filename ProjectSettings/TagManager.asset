@@ -17,6 +17,8 @@ TagManager:
   - Enemy_Weapon
   - pauseManager
   - Stage
+  - playerGetHitCol
+  - se_enemyGetHit
   layers:
   - Default
   - TransparentFX

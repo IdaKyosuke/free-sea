@@ -111,6 +111,8 @@ public class Status_Player : MonoBehaviour
 				m_status.LvUp();
 				// スキルポイントの加算
 				GetSkillPoint();
+				// レベルアップエフェクト
+				ActiveLevelUpEffect();
 			} while (m_currentExp >= m_nextExp);
 		}
 	}
@@ -254,5 +256,11 @@ public class Status_Player : MonoBehaviour
 	{
 		// テストで値を反映させる
 		m_status.Save();
+	}
+
+	// レベルアップ時にエフェクトを出す
+	private void ActiveLevelUpEffect()
+	{
+		GameObject.FindWithTag("Player").GetComponent<Move_Player>().ActiveLevelUpEffect();
 	}
 }

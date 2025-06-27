@@ -19,7 +19,7 @@ public class AttackCollider : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		// プレイヤーにダメージを与える処理
-		if(other.gameObject.CompareTag("Player"))
+		if(other.gameObject.CompareTag("playerGetHitCol"))
 		{
 			m_playerStatus.GetComponent<Status_Player>().GetHit(m_parent.GetComponent<Move_Enemy>().Damage());
 		}
