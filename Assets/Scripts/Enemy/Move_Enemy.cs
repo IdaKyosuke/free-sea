@@ -31,6 +31,12 @@ public class Move_Enemy : MonoBehaviour
 	// プレイヤーに向かって移動・攻撃を始めるフラグ
 	private bool m_isCombat;
 
+	// アニメーション用のモデルが別で存在する場合
+	[SerializeField] GameObject m_model;
+
+	// レイの長さ
+	[SerializeField] float m_rayLength = 1;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -57,6 +63,13 @@ public class Move_Enemy : MonoBehaviour
 		m_hp = m_status.GetHp();
 		m_exp = m_status.GetExp();
 		m_damage = m_status.GetDamage();
+
+		// 床より高い場合
+		RaycastHit hit;
+		if(Physics.Raycast(transform.position + Vector3.up, transform.position + Vector3.down, out hit, m_rayLength))
+		{
+			transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+		}
 	}
 
 	// Update is called once per frame
@@ -164,7 +177,14 @@ public class Move_Enemy : MonoBehaviour
 	public void Combat()
 	{
 		m_isCombat = true;
-		GetComponent<Animation_Enemy>().SetCombat();
+		if(m_model)
+		{
+			m_model.GetComponent<Animation_Enemy>().SetCombat();
+		}
+		else
+		{
+			GetComponent<Animation_Enemy>().SetCombat();
+		}
 	}
 
 	// 自分のステータス（初期値）を渡す

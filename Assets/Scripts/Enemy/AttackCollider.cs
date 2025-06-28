@@ -6,13 +6,20 @@ using UnityEngine;
 public class AttackCollider : MonoBehaviour
 {
 	[SerializeField] GameObject m_playerStatus;
-	[SerializeField] GameObject m_parent;	// 攻撃判定の親オブジェクト
+	[SerializeField] GameObject m_parent;   // 攻撃判定の親オブジェクト
+
+	[SerializeField] int m_damage;
 
 	void Start()
 	{
 		if(!m_playerStatus)
 		{
 			m_playerStatus = GameObject.FindWithTag("playerStatus");
+		}
+
+		if(m_parent)
+		{
+			m_damage = m_parent.GetComponent<Move_Enemy>().Damage();
 		}
 	}
 
@@ -21,7 +28,7 @@ public class AttackCollider : MonoBehaviour
 		// プレイヤーにダメージを与える処理
 		if(other.gameObject.CompareTag("playerGetHitCol"))
 		{
-			m_playerStatus.GetComponent<Status_Player>().GetHit(m_parent.GetComponent<Move_Enemy>().Damage());
+			m_playerStatus.GetComponent<Status_Player>().GetHit(m_damage);
 		}
 	}
 }

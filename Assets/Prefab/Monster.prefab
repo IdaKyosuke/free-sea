@@ -1110,6 +1110,7 @@ MonoBehaviour:
   m_enemyAnimator: {fileID: 3536575118158824873}
   m_deathEffectHeightDiff: 0.5
   m_playerTransform: {fileID: 0}
+  m_model: {fileID: 3536575118158824873}
 --- !u!136 &5567901578853817088
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6576,6 +6577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerStatus: {fileID: 0}
   m_parent: {fileID: 1484469882477332184}
+  m_damage: 0
 --- !u!1 &8258297721465987916
 GameObject:
   m_ObjectHideFlags: 0

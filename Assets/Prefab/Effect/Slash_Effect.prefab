@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2731051908226494707}
   - component: {fileID: 6743814678536478131}
   - component: {fileID: 5659741659967047549}
+  - component: {fileID: 3190177724371330604}
+  - component: {fileID: -1278493094684508015}
   m_Layer: 0
   m_Name: Slash_Effect
   m_TagString: Untagged
@@ -81,6 +83,42 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3190177724371330604
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208387562240024770}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 0.2, z: 2.4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1278493094684508015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208387562240024770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ea4374caf1b634597fa026bae2242d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerStatus: {fileID: 0}
+  m_parent: {fileID: 0}
+  m_damage: 20
 --- !u!1 &1307996546716237401
 GameObject:
   m_ObjectHideFlags: 0
