@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Status_Player : MonoBehaviour
@@ -27,7 +24,9 @@ public class Status_Player : MonoBehaviour
 
 	private float m_hp; // 現在の体力
 	private bool m_isDeath; // 死んだか
-	private bool m_isInvincible;	// 現在無敵時間か
+	private bool m_isInvincible;    // 現在無敵時間か
+
+	[SerializeField] GameObject m_sceneManager;
 
 	// Start is called before the first frame update
 	void Start()
@@ -127,6 +126,9 @@ public class Status_Player : MonoBehaviour
 	// ダメージ処理
 	public void GetHit(float damage)
 	{
+		// 死亡したら無視
+		if (m_isDeath) return;
+
 		// 無敵時間中は処理を飛ばす
 		if (!m_isInvincible)
 		{
@@ -135,7 +137,20 @@ public class Status_Player : MonoBehaviour
 			{
 				// 最低値を0にする
 				m_hp = 0;
+				// ゲームオーバーUI
+				StartCoroutine(m_sceneManager.GetComponent<GameMainManager>().Lose());
 			}
+		}
+	}
+
+	// 回復処理
+	public void Heal(float health)
+	{
+		m_hp += health;
+		// 体力の最大値を超えたときに最大値に合わせる
+		if(m_hp >= m_statusValue[(int)Status.StatusType.Hp])
+		{
+			m_hp = m_statusValue[(int)Status.StatusType.Hp];
 		}
 	}
 
@@ -262,5 +277,11 @@ public class Status_Player : MonoBehaviour
 	private void ActiveLevelUpEffect()
 	{
 		GameObject.FindWithTag("Player").GetComponent<Move_Player>().ActiveLevelUpEffect();
+	}
+
+	// 1発で死亡させる
+	public void Death()
+	{
+		GetHit(m_hp);
 	}
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 
 public class StartBossBattle : MonoBehaviour
@@ -23,6 +20,8 @@ public class StartBossBattle : MonoBehaviour
 	private bool m_isStart;
 	[SerializeField] float m_waitTimeBGM;
 	private bool m_isPlay;
+
+	[SerializeField] GameObject m_sceneManager;
 
     // Start is called before the first frame update
     void Start()
@@ -90,5 +89,7 @@ public class StartBossBattle : MonoBehaviour
 		m_areaWall.SetActive(false);
 		// –¼‘O‚â‘Ì—Í‚ð”ñ•\Ž¦‚·‚é
 		m_bossUI.SetActive(false);
+
+		StartCoroutine(m_sceneManager.GetComponent<GameMainManager>().Win());
 	}
 }

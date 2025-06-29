@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Xml.Serialization;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Move_Player : MonoBehaviour
@@ -34,6 +29,9 @@ public class Move_Player : MonoBehaviour
 
 	// レベルアップ時のエフェクト
 	[SerializeField] GameObject m_effect;
+
+	[SerializeField] GameObject m_effectHeal;       // 回復エフェクト
+	[SerializeField] AudioSource m_seHeal;		// 回復音
 
 	// Start is called before the first frame update
 	void Start()
@@ -79,6 +77,12 @@ public class Move_Player : MonoBehaviour
 		m_stopMove = m_model.GetComponent<Animation_Player>().GetMoveFlg();
 		// 本来の移動
 		NormalMove();
+
+		// 奈落死
+		if(transform.position.y <= -100)
+		{
+			m_status.GetComponent<Status_Player>().Death();
+		}
 	}
 
 	// 移動
@@ -87,8 +91,8 @@ public class Move_Player : MonoBehaviour
 		if(!m_stopMove)
 		{
 			// キーの入力
-			m_inputX = Input.GetAxisRaw("Horizontal");
-			m_inputZ = Input.GetAxisRaw("Vertical");
+			m_inputX = Input.GetAxis("Horizontal");
+			m_inputZ = Input.GetAxis("Vertical");
 
 			// カメラの向き
 			m_camForward = Vector3.Scale(m_cam.transform.forward, new Vector3(1, 0, 1)).normalized;
@@ -116,47 +120,45 @@ public class Move_Player : MonoBehaviour
 				m_isRun = false;
 			}
 
-			// 移動速度の上昇補正値を上げすぎないようにする
-			float spdBuff = m_status.GetComponent<Status_Player>().GetStatusValue(Status.StatusType.Spd);
-			switch(spdBuff)
-			{
-				case <= 4:
-					spdBuff *= 0.9f;
-					break;
-
-				case <= 8:
-					spdBuff *= 0.7f;
-					break;
-
-				default:
-					spdBuff *= 0.6f;
-					break;
-			}
-			
-			// キャラクターコントローラーを使った移動
-			m_charaCon.Move(m_camForward * (Input.GetKey("left shift") ? m_runSpeed * spdBuff : m_walkSpeed) * m_inputZ * Time.deltaTime);
-			m_charaCon.Move(m_camRight * (Input.GetKey("left shift") ? m_runSpeed * spdBuff : m_walkSpeed) * m_inputX * Time.deltaTime);
-
 			// プレイヤーの回転
 			transform.rotation = Quaternion.LookRotation(m_moveDirection);
-
-			// 重力
-			if (!m_charaCon.isGrounded)
-			{
-				m_moveVelocity.y += Physics.gravity.y * Time.deltaTime;
-			}
-			else
-			{
-				m_moveVelocity.y = 0;
-			}
-			m_charaCon.Move(m_moveVelocity * Time.deltaTime);
-
-			//CheckGround();
 		}
 		else
 		{
 			m_isRun = false;
 		}
+
+		// 移動速度の上昇補正値を上げすぎないようにする
+		float spdBuff = m_status.GetComponent<Status_Player>().GetStatusValue(Status.StatusType.Spd);
+		switch(spdBuff)
+		{
+			case <= 4:
+				spdBuff *= 0.9f;
+				break;
+
+			case <= 8:
+				spdBuff *= 0.7f;
+				break;
+
+			default:
+				spdBuff *= 0.6f;
+				break;
+		}
+
+		// キャラクターコントローラーを使った移動
+		m_charaCon.Move(m_camForward * (Input.GetKey("left shift") ? m_runSpeed * spdBuff : m_walkSpeed) * m_inputZ * Time.deltaTime);
+		m_charaCon.Move(m_camRight * (Input.GetKey("left shift") ? m_runSpeed * spdBuff : m_walkSpeed) * m_inputX * Time.deltaTime);
+
+		// 重力
+		if (!m_charaCon.isGrounded)
+		{
+			m_moveVelocity.y += Physics.gravity.y * Time.deltaTime;
+		}
+		else
+		{
+			m_moveVelocity.y = 0;
+		}
+		m_charaCon.Move(m_moveVelocity * Time.deltaTime);
 	}
 
 	// 移動を止めるときに使う
@@ -206,5 +208,14 @@ public class Move_Player : MonoBehaviour
 	{
 		Instantiate(m_effect, this.transform.position, Quaternion.identity);
 		Debug.Log("levelup!");
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.CompareTag("item_heal"))
+		{
+			Instantiate(m_effectHeal, transform.position, Quaternion.identity);
+			m_seHeal.Play();
+		}
 	}
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035d65e5c0f3df347a012c2ba1bfbb47, type: 3}
   m_Name: Minotaur
   m_EditorClassIdentifier: 
-  hp: 200
+  hp: 3000
   exp: 100
-  damage: 80
+  damage: 100

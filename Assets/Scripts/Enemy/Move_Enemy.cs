@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,6 +32,13 @@ public class Move_Enemy : MonoBehaviour
 
 	// レイの長さ
 	[SerializeField] float m_rayLength = 1;
+
+	// ----- ボス用の項目 -----
+	[SerializeField] bool m_isBoss;		// この敵がボスかどうか
+	[SerializeField] int m_hitCount;    // 何回攻撃を食らえばひるむか
+	[SerializeField] float m_countResetTime;    // 連続攻撃の判定をリセットするまでの時間
+	private float m_duration;       // 連続攻撃の判定をリセットするまでの時間を数える用（途中で攻撃されたら時間をリセット）
+	private int m_currentHitCount;	// 攻撃された数をカウントする用
 
 	// Start is called before the first frame update
 	void Start()
@@ -106,6 +109,18 @@ public class Move_Enemy : MonoBehaviour
 			// 攻撃中は体の向きを敵に合わせる
 			RotateForPlayer();
 		}
+
+		// 連続攻撃の判定用
+		if(m_currentHitCount > 0)
+		{
+			// 1回でも攻撃されていたら
+			m_duration += Time.deltaTime;
+			if(m_duration >= m_countResetTime)
+			{
+				m_currentHitCount = 0;
+				m_duration = 0;
+			}
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -123,14 +138,33 @@ public class Move_Enemy : MonoBehaviour
 			Instantiate(m_hitEffect, hitPos, Quaternion.identity);
 
 			// ダメージを受ける
-			m_hp--;
+			m_hp -= (int)m_playerStatus.GetComponent<Status_Player>().GetStatusValue(Status.StatusType.Atk);
 			// se再生
 			m_seGetHit.Play();
 
 			if(m_hp > 0)
 			{
-				// まだ死亡していなかったら攻撃を受けるアニメーションを実行する
-				m_enemyAnimator.GetComponent<Animation_Enemy>().GetHit();
+				// ボスの場合は一定数攻撃しないとひるまない
+				if (m_isBoss)
+				{
+					// カウントの加算
+					m_currentHitCount++;
+					// リセットまでの時間をリセット
+					m_duration = 0;
+
+					if(m_currentHitCount >= m_hitCount)
+					{
+						// まだ死亡していなかったら攻撃を受けるアニメーションを実行する
+						m_enemyAnimator.GetComponent<Animation_Enemy>().GetHit();
+						// カウントのリセット
+						m_currentHitCount = 0;
+					}
+				}
+				else
+				{
+					// まだ死亡していなかったら攻撃を受けるアニメーションを実行する
+					m_enemyAnimator.GetComponent<Animation_Enemy>().GetHit();
+				}
 			}
 			else
 			{

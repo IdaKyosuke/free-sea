@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a89c0fda35e8f6b4d92ecfecfa885a61
+  m_SerializeEntries:
+  - m_GUID: 02961f682adbc3847ba319400c447b8b
+    m_Address: Assets/Prefab/Monster.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 040be94cd3b6c9d44848fe5306163014
+    m_Address: Assets/MonsterMutant 7/Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1430080f5134d0f4eac4c32c9b22d0c4
+    m_Address: Assets/Prefab/UI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14a31c0f3cb0c5540b8ef9e1eb655f88
+    m_Address: Assets/MonsterMutant 7/Stand
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15316e338a8afaa4d9feccef2da7ea41
+    m_Address: Assets/Prefab/apple.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f782baedcb1aa543a0dd093b1bf9d2c
+    m_Address: Assets/Bill/Models
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3040ad50f2db3e349896a1a8a8050bdb
+    m_Address: Assets/Audio/BGM
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e084feb06cbbda4ab04291fa86b37df
+    m_Address: Assets/Prefab/Magic_Ball_Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61732dae651188140a09773b72ec09af
+    m_Address: Assets/Prefab/Minotaur.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e5c783cd868cb34885a657fa2be561c
+    m_Address: Assets/MonsterMutant 7/Texture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c07ae0994e0e7e419d42307c2c61952
+    m_Address: Assets/Prefab/Stage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fa073593cb4cb544a43568b76a18a80
+    m_Address: Assets/Audio/SE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6915518a00e4ad41a6e226a4f86dff4
+    m_Address: Assets/Prefab/Magic_Ball_Angel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b72d9386c2337ea4ab1dec182e53fc2f
+    m_Address: Assets/Bill/Textures
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b87bec4eda504d6498cf0be335a99277
+    m_Address: Assets/Bill/Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb24ef2a1a58e2241a109e1ce841e1c3
+    m_Address: Assets/MonsterMutant 7/Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c25cd08c114eca644818ad1caf0c90da
+    m_Address: Assets/Prefab/Effect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0d3645d55dac8849a000a818145c074
+    m_Address: Assets/MonsterMutant 7/Base mesh
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e269e6d71bf7c6649a02f4bd41f60705
+    m_Address: Assets/Prefab/PlayerModel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4a1d0c50dc614a94a9e39bfd835ac296, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: fa5a53a9f5a4b844da9c8ef4249be38a, type: 2}
+    - {fileID: 11400000, guid: fa03261c4a497cb4bb7fc21fc148f462, type: 2}
